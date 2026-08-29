@@ -328,6 +328,238 @@ Die wichtigsten Nutzergruppen von AutoScan AI konkret beschreiben und ihre zentr
 
 ---
 
+## 2026-08-12 – Nutzungsszenarien, Customer Journey Maps und erster Compliance Review
+
+**Prompt**
+
+> Erstellt für jede Persona ein Szenario, wie diese eure Anwendung nutzt, und befüllt dafür die Customer Journey Map.  
+> Führt einen ersten Compliance Review durch.
+
+**Tagesziel**
+
+Für jede Persona einen realistischen End-to-End-Nutzungsfall beschreiben, Chancen und Reibungspunkte entlang der Customer Journey sichtbar machen und die wichtigsten regulatorischen sowie organisatorischen Anforderungen für das MVP frühzeitig identifizieren.
+
+> **Hinweis:** Dieser erste Compliance Review ist eine Produkt- und Risikoanalyse auf Basis des derzeit bekannten MVP-Konzepts. Er ersetzt keine individuelle Rechtsberatung oder technische Konformitätsbewertung.
+
+### Szenario 1 – Sarah: Warnleuchte vor einer längeren Fahrt
+
+Sarah möchte am nächsten Morgen zu ihrer Familie fahren. Am Abend leuchtet die Motorkontrollleuchte auf. Sie hat nur geringe Fahrzeugkenntnisse und ist unsicher, ob sie weiterfahren darf. Sarah verbindet einen unterstützten OBD-II-Adapter, startet den geführten Scan und erhält eine verständliche Erklärung mit einer konservativen Risikostufe. Die App macht transparent, dass sie keine sichere Fahrtfreigabe erteilen kann, und empfiehlt abhängig vom Ergebnis eine zeitnahe Werkstattprüfung. Sarah speichert den Bericht und teilt ihn mit einer Werkstatt.
+
+#### Customer Journey Map – Sarah
+
+| Phase | Handlung | Ziel/Frage | Gefühl | Kontaktpunkt | Problem | Produktchance |
+|---|---|---|---|---|---|---|
+| Auslöser | Sie bemerkt die Warnleuchte | „Kann ich morgen sicher fahren?“ | Besorgt | Fahrzeug, Warnleuchte | Keine verständliche Information | Ruhige Einführung und klare Sicherheitsbotschaft |
+| Einstieg | Sie öffnet AutoScan AI | Schnell Hilfe erhalten | Unsicher, hoffnungsvoll | Startseite | Fachbegriffe könnten überfordern | Geführter Diagnosemodus ohne Jargon |
+| Verbindung | Sie verbindet den OBD-II-Adapter | Eine stabile Verbindung herstellen | Angespannt | Bluetooth-/WLAN-Dialog | Adapter wird eventuell nicht erkannt | Kompatibilitätsprüfung und konkrete Fehlerhilfe |
+| Scan | Sie startet die Diagnose | Ursache der Warnung eingrenzen | Konzentriert | Scan-Ansicht | Unklarheit über Dauer und Fahrzeugzugriff | Fortschrittsanzeige und Hinweis „nur lesender Zugriff“ |
+| Verständnis | Sie liest Code, Erklärung und Risikostufe | Dringlichkeit verstehen | Erleichtert oder alarmiert | Ergebnisansicht | Gefahr falscher Sicherheit | Konservative Einstufung, Unsicherheit und Grenzen anzeigen |
+| Handlung | Sie folgt den nächsten Schritten | Angemessen reagieren | Handlungsfähig | Handlungsempfehlung | Empfehlung könnte missverstanden werden | Klare Stufen: beobachten, prüfen, anhalten/Hilfe |
+| Abschluss | Sie speichert und teilt den Bericht | Werkstattgespräch vorbereiten | Beruhigt | Bericht/Export | Datenschutz beim Teilen | Vorschau, Datenauswahl und sicherer Export |
+
+**Erfolgsmoment:** Sarah versteht die Dringlichkeit und weiß, was sie als Nächstes sicher tun soll.
+
+**Zentrale Messgrößen:** erfolgreiche Verbindung, Scan-Abschluss, Verständnis der Risikostufe, Berichtsexport.
+
+### Szenario 2 – Jonas: Wiederkehrender unruhiger Motorlauf
+
+Jonas bemerkt seit mehreren Tagen einen unruhigen Motorlauf. Er besitzt technisches Grundwissen und möchte nicht nur einen Fehlercode, sondern mögliche Ursachen und deren Herleitung verstehen. Nach dem Scan prüft er Fehlercode, relevante Sensordaten, plausible Ursachen und technische Quellen. Er vergleicht den neuen Bericht mit einem früheren Scan und nutzt die Informationen zur Vorbereitung einer Reparatur oder eines Werkstatttermins.
+
+#### Customer Journey Map – Jonas
+
+| Phase | Handlung | Ziel/Frage | Gefühl | Kontaktpunkt | Problem | Produktchance |
+|---|---|---|---|---|---|---|
+| Auslöser | Er bemerkt wiederkehrenden unruhigen Motorlauf | Problem systematisch eingrenzen | Neugierig, skeptisch | Fahrzeug | Symptom ist nicht eindeutig | Symptom und Diagnosezeitpunkt dokumentieren |
+| Einstieg | Er öffnet den Expertenmodus | Technische Details sehen | Motiviert | Dashboard | Zu einfache App wirkt unglaubwürdig | Wechsel zwischen einfacher und detaillierter Ansicht |
+| Verbindung | Er verbindet seinen Adapter | Schnell Diagnosedaten abrufen | Routiniert | Adapterverwaltung | Unterschiedliche Adapterqualität | Unterstützungsstatus und Adapterdetails anzeigen |
+| Scan | Er liest Codes und ausgewählte Live-Daten | Technische Indizien sammeln | Analytisch | Scan-/Live-Datenansicht | Fehlende Datenqualität oder Einheiten | Datenqualität, Einheit und Zeitpunkt anzeigen |
+| Analyse | Er prüft Ursachen und Quellen | KI-Aussagen nachvollziehen | Kritisch | Diagnose-Engine | KI könnte Vermutungen als Fakten darstellen | Hypothesen kennzeichnen und Quellen verknüpfen |
+| Vergleich | Er vergleicht frühere Berichte | Veränderung erkennen | Konzentriert | Diagnosehistorie | Personen- und Fahrzeugbezug der Historie | Lokale Speicherung, Filter und transparente Einwilligung |
+| Handlung | Er bereitet Reparatur oder Werkstattgespräch vor | Zeit und Kosten sparen | Informiert | Bericht/Export | Selbstreparatur kann riskant sein | Sichere Grenzen und keine riskanten Anleitungen |
+
+**Erfolgsmoment:** Jonas kann technische Aussagen nachvollziehen und eine begründete nächste Maßnahme auswählen.
+
+**Zentrale Messgrößen:** Nutzung technischer Details, Quellenaufrufe, Berichtsvergleich, Anteil nachvollziehbarer Empfehlungen.
+
+### Szenario 3 – Mehmet: Gebrauchtwagenprüfung bei einer Besichtigung
+
+Mehmet besichtigt einen gebrauchten Familienwagen. Mit Zustimmung des Fahrzeughalters verbindet er seinen Adapter und startet einen schnellen, ausschließlich lesenden Scan. Die App zeigt vorhandene Standardfehlercodes, den Zeitpunkt der Prüfung, Datenlücken und die Grenzen der Aussagekraft. Mehmet exportiert eine datensparsame Zusammenfassung und nutzt sie als Gesprächsgrundlage. Die App bezeichnet den Bericht ausdrücklich als Momentaufnahme und nicht als Kaufgutachten.
+
+#### Customer Journey Map – Mehmet
+
+| Phase | Handlung | Ziel/Frage | Gefühl | Kontaktpunkt | Problem | Produktchance |
+|---|---|---|---|---|---|---|
+| Vorbereitung | Er plant eine Fahrzeugbesichtigung | Überraschungen vermeiden | Vorsichtig | Checkliste/App | Unsicherheit über Adapter und Fahrzeugkompatibilität | Vorab-Kompatibilitätscheck |
+| Zustimmung | Er bittet den Halter um Erlaubnis | Rechtmäßig und transparent prüfen | Respektvoll | Einwilligungs-/Hinweisdialog | Unklare Berechtigung zum Fahrzeugzugriff | Bestätigung der Berechtigung dokumentieren |
+| Verbindung | Er schließt den Adapter an | Scan ohne Fahrzeugänderung | Angespannt | OBD-II-Anschluss | Sorge vor Manipulation | Deutlicher Hinweis „nur lesender Zugriff“ |
+| Scan | Er führt einen Schnellscan aus | Hinweise auf Probleme finden | Konzentriert | Scan-Ansicht | Fehlercodes können gelöscht oder unvollständig sein | Zeitpunkt, Datenumfang und Lücken transparent machen |
+| Bewertung | Er liest Zusammenfassung und Risikostufen | Kaufentscheidung vorbereiten | Kritisch | Ergebnisansicht | Momentaufnahme könnte überschätzt werden | Kein „bestanden“; Grenzen und Werkstattprüfung empfehlen |
+| Gespräch | Er bespricht Ergebnisse mit Verkäufer | Offene Fragen klären | Informiert | Berichtsvorschau | Bericht kann fremde Daten enthalten | Datenminimierung und selektiver Export |
+| Entscheidung | Er entscheidet über Prüfung oder Kauf | Finanzielle Risiken reduzieren | Sicherer | Export/Checkliste | App ersetzt kein Gutachten | Unabhängige fachliche Prüfung als nächsten Schritt anbieten |
+
+**Erfolgsmoment:** Mehmet erhält eine verständliche, neutrale Momentaufnahme, ohne dass die App eine Kaufgarantie suggeriert.
+
+**Zentrale Messgrößen:** Kompatibilitätsprüfung, abgeschlossene Schnellscans, Verständnis des Haftungshinweises, selektive Exporte.
+
+### Übergreifende Erkenntnisse aus den Customer Journeys
+
+| Erkenntnis | Produktanforderung | Priorität |
+|---|---|---|
+| Nutzer müssen dem Fahrzeugzugriff vertrauen | Rein lesenden Zugriff sichtbar und technisch erzwingen | Sehr hoch |
+| Verbindung ist der erste kritische Abbruchpunkt | Adapterprüfung, Statusanzeige und konkrete Fehlerhilfe | Sehr hoch |
+| Risikostufen können falsche Sicherheit erzeugen | Konservative Regeln, Begründung und Unsicherheit anzeigen | Sehr hoch |
+| Zielgruppen benötigen unterschiedliche Informationstiefe | Einfache Standardansicht und optionale technische Details | Hoch |
+| Berichte enthalten potenziell sensible Daten | Vorschau, Datenauswahl, Löschung und sicherer Export | Sehr hoch |
+| Gebrauchtwagenscan ist nur eine Momentaufnahme | Kein „bestanden“-Urteil und kein Kaufgutachten versprechen | Sehr hoch |
+| KI-Aussagen müssen nachvollziehbar sein | Strukturierte Quellen, Hypothesenkennzeichnung und Logging | Sehr hoch |
+
+## Erster Compliance Review
+
+### Annahmen und Abgrenzung
+
+Dieser Review geht von folgendem MVP aus:
+
+- mobile App für EU-Nutzer,
+- Verbindung zu einem fremdbezogenen OBD-II-Adapter,
+- ausschließlich lesender Zugriff,
+- Verarbeitung standardisierter Fahrzeugdiagnosedaten,
+- KI-gestützte verständliche Erklärung und Handlungsempfehlung,
+- optionale Nutzerkonten, Cloud-Verarbeitung und Berichtsexport,
+- keine Fahrzeugsteuerung, Codierung oder automatische Reparaturentscheidung,
+- kein medizinischer, behördlicher oder versicherungsrechtlicher Einsatzzweck.
+
+Ändert sich dieser Umfang, muss die Einstufung erneut geprüft werden.
+
+### Compliance-Matrix
+
+| Bereich | Erste Einschätzung | Wesentliches Risiko | Erforderliche Maßnahme | Priorität |
+|---|---|---|---|---|
+| DSGVO | Sehr wahrscheinlich anwendbar, sobald Fahrzeugdaten einer Person zugeordnet werden können | Unzulässige oder übermäßige Verarbeitung | Dateninventar, Zwecke, Rechtsgrundlagen, Löschfristen und Betroffenenrechte dokumentieren | Kritisch |
+| Privacy by Design | Von Beginn an erforderlich | Spätes Nachrüsten von Datenschutz | Lokale Verarbeitung bevorzugen, Datenminimierung und datenschutzfreundliche Voreinstellungen | Kritisch |
+| Informationssicherheit | Angemessene technische und organisatorische Maßnahmen erforderlich | Datenabfluss, Kontoübernahme, manipulierte Diagnosen | Verschlüsselung, Zugriffskontrolle, Protokollierung, sichere Updates und Incident-Prozess | Kritisch |
+| Auftragsverarbeitung | Relevant bei Cloud-, Analyse- oder KI-Anbietern | Unklare Verantwortlichkeiten und Drittlandtransfer | AV-Verträge, Unterauftragnehmer, Speicherorte und Transfermechanismen prüfen | Hoch |
+| Datenschutz-Folgenabschätzung | Nicht automatisch zwingend; anhand realer Verarbeitung prüfen | Systematische Fahrzeug-/Verhaltensprofile oder hohes Risiko | DPIA-Screening vor Pilotphase, Entscheidung dokumentieren | Hoch |
+| EU AI Act | KI-System ist anwendbar; MVP voraussichtlich nicht automatisch hochriskant | Falsche Einstufung, fehlende Transparenz und Kompetenz | AI-Inventar, Zweck, Rolle, Anbieterunterlagen, menschliche Aufsicht und AI-Literacy dokumentieren | Kritisch |
+| AI-Transparenz | Je nach Interaktionsform und Ausgabe relevant | Nutzer halten KI-Erklärung für eine gesicherte Diagnose | KI-Einsatz, Grenzen, Quellen und Unsicherheit klar anzeigen | Kritisch |
+| Hochrisiko-Prüfung | Bei rein beratendem, lesendem MVP derzeit eher nicht; erneute Prüfung nötig | Spätere Sicherheitsfunktion oder regulierte Produktintegration | Classification Memo vor jeder Erweiterung um Steuerung oder sicherheitsbezogene Automatisierung | Hoch |
+| EU Data Act | Potenziell relevant für Zugang und Nutzung von Daten vernetzter Produkte | Unklare Nutzungs- und Weitergaberechte | Rollen, Fahrzeugberechtigung, Datenzugang, Verträge und Exportrechte prüfen | Hoch |
+| Cyber Resilience Act | Für vermarktete Software bzw. Produkte mit digitalen Elementen potenziell relevant | Unsicheres Produkt und fehlendes Schwachstellenmanagement | Secure Development Lifecycle, SBOM, Vulnerability Handling und Update-Support planen | Kritisch |
+| Produkthaftung | Software und KI können Haftungsrisiken auslösen | Personen- oder Sachschäden durch fehlerhafte Empfehlungen | Sicherheitsanforderungen, Testnachweise, Warnhinweise, Logs und Freigaben dokumentieren | Kritisch |
+| Allgemeine Produktsicherheit | Bei Verbraucherprodukt/-software zu prüfen | Unsichere Nutzung oder irreführende Sicherheitswirkung | Risikoanalyse, verständliche Anweisungen, Warnungen und Rückruf-/Incident-Prozess | Hoch |
+| Fahrzeug-/OBD-Regeln | Technischer und vertraglicher Rahmen ist zu prüfen | Nicht autorisierter Zugriff, Kompatibilitäts- oder Herstellerbeschränkungen | Nur Standardschnittstellen, Nutzerberechtigung und Adapter-/Fahrzeugmatrix dokumentieren | Hoch |
+| Verbraucherrecht | Für kostenpflichtige App, Abo und digitale Inhalte relevant | Irreführende Leistungsversprechen oder unwirksame Bedingungen | Preis-, Funktions-, Kündigungs- und Gewährleistungsinformationen transparent gestalten | Hoch |
+| Barrierefreiheit | Je nach Angebot und Anwendungsbereich rechtlich bzw. qualitativ relevant | Ausschluss von Nutzern in Stresssituationen | WCAG-orientiertes Design, Text statt Farbe allein, Screenreader- und Kontrasttests | Mittel |
+| Open-Source- und Datenlizenzen | Für Bibliotheken, OBD-Codequellen und Modelle relevant | Lizenzverletzung oder unzulässige Datennutzung | Lizenzregister, Notices und Herkunftsnachweise führen | Hoch |
+
+### DSGVO-Mindestmaßnahmen für das MVP
+
+- [ ] Datenflussdiagramm und Verzeichnis der Verarbeitungstätigkeiten erstellen
+- [ ] Personenbezug für VIN, Diagnosehistorie, Konto, Gerätekennung und Standort bewerten
+- [ ] Zweck und Rechtsgrundlage je Datenkategorie festlegen
+- [ ] Einwilligung nur dort einsetzen, wo sie freiwillig, informiert und widerrufbar ist
+- [ ] Nicht notwendige Telemetrie und Standortdaten standardmäßig deaktivieren
+- [ ] Lösch- und Aufbewahrungsfristen technisch umsetzen
+- [ ] Auskunft, Export, Berichtigung und Löschung ermöglichen
+- [ ] Auftragsverarbeiter und internationale Datentransfers prüfen
+- [ ] Datenschutzverletzungs- und Incident-Prozess definieren
+- [ ] DPIA-Screening dokumentieren
+
+### AI-Governance-Mindestmaßnahmen
+
+- [ ] Zweck, Systemgrenzen und verbotene Anwendungsfälle dokumentieren
+- [ ] Verantwortliche Rolle als Anbieter oder Betreiber bestimmen
+- [ ] Eingesetzte Modelle, Versionen, Anbieter und Änderungen inventarisieren
+- [ ] Strukturierte technische Daten als Primärquelle verwenden
+- [ ] KI-Hypothesen von bestätigten Fakten unterscheiden
+- [ ] Risikostufe durch konservative Regeln absichern
+- [ ] Menschliche Prüfung für sicherheitsrelevante Änderungen vorsehen
+- [ ] Testfälle für Halluzinationen, gefährliche Empfehlungen und Datenlücken pflegen
+- [ ] Nutzer transparent über KI-Einsatz und Grenzen informieren
+- [ ] AI-Literacy für verantwortliche Teammitglieder sicherstellen
+
+### Security- und Produktsicherheitsmaßnahmen
+
+- [ ] Schreibende OBD-II-Befehle technisch blockieren und automatisiert testen
+- [ ] Unterstützte Adapter und Fahrzeuge in einer geprüften Matrix führen
+- [ ] Threat Model für App, Bluetooth/WLAN, Backend, Berichte und Updates erstellen
+- [ ] Sichere Software-Lieferkette, Abhängigkeitsprüfung und SBOM vorbereiten
+- [ ] Schwachstellenmeldeprozess und Security-Kontakt veröffentlichen
+- [ ] Signierte Updates und definierte Supportdauer planen
+- [ ] Manipulationssichere Audit-Logs für Diagnose- und Regelversionen vorsehen
+- [ ] Sicherheitsvorfälle, Korrekturmaßnahmen und Nutzerinformation prozessual planen
+
+### Vorläufige Freigabeentscheidung
+
+**Status: Bedingt freigabefähig für einen internen, rein lesenden Prototyp.**
+
+Bedingungen:
+
+1. Keine Schreibbefehle oder Steuerung des Fahrzeugs.
+2. Keine Aussage „sicher weiterfahren“ oder „Fahrzeug ist in Ordnung“.
+3. Keine echte VIN, Diagnosehistorie oder personenbezogene Cloud-Daten ohne dokumentierte Datenschutzgrundlage.
+4. KI-Erklärungen werden als unterstützende Einschätzung gekennzeichnet.
+5. Kritische Empfehlungen beruhen auf geprüften Regeln und werden getestet.
+6. Vor externem Pilotbetrieb erfolgen DPIA-Screening, Security Review und juristische Prüfung.
+7. Vor Vermarktung werden AI-Act-, CRA-, Data-Act-, Verbraucher- und Produkthaftungsrollen verbindlich bestimmt.
+
+### Compliance-Risikoregister
+
+| ID | Risiko | Eintritt | Auswirkung | Bewertung | Owner | Maßnahme |
+|---|---|---|---|---|---|---|
+| C-01 | KI gibt gefährliche oder zu sichere Empfehlung | Mittel | Sehr hoch | Kritisch | Product/Automotive | Regelbasierte Sicherheitsgrenzen und fachliche Tests |
+| C-02 | Personenbezogene Fahrzeugdaten werden ohne klare Grundlage gespeichert | Mittel | Hoch | Hoch | Privacy | Dateninventar, Rechtsgrundlagen und lokale Verarbeitung |
+| C-03 | Unsicherer Adapter oder Kommunikationskanal manipuliert Daten | Mittel | Hoch | Hoch | Security | Adapterprüfung, Authentizitäts- und Plausibilitätskontrollen |
+| C-04 | Gebrauchtwagenbericht wird als Gutachten verstanden | Hoch | Hoch | Kritisch | Product/Legal | Momentaufnahme, klare Grenzen und kein Bestehensurteil |
+| C-05 | Externer KI-Anbieter verarbeitet Daten in unzulässiger Weise | Mittel | Hoch | Hoch | Privacy/Technical | AV-Vertrag, Datenminimierung und Transferprüfung |
+| C-06 | CRA-Anforderungen werden zu spät berücksichtigt | Mittel | Hoch | Hoch | Technical/Security | Secure Development Lifecycle und Produktrollen früh definieren |
+| C-07 | Technische Datenbank oder Bibliothek verletzt Lizenzen | Mittel | Mittel | Mittel | Technical/Legal | Lizenzregister und Herkunftsnachweise |
+| C-08 | Sicherheitsrelevante Entscheidung ist nicht nachvollziehbar | Mittel | Sehr hoch | Kritisch | QA/Automotive | Versionierung, Quellen, Logs und Freigaben |
+
+### Offizielle Quellen für die weitere Prüfung
+
+- [Datenschutz-Grundverordnung – Verordnung (EU) 2016/679](https://eur-lex.europa.eu/eli/reg/2016/679/oj/eng)
+- [EU AI Act – Verordnung (EU) 2024/1689](https://eur-lex.europa.eu/eli/reg/2024/1689/oj/eng)
+- [EU-Kommission: Durchsetzung und Transparenzpflichten des AI Acts ab 2. August 2026](https://digital-strategy.ec.europa.eu/en/news/commission-starts-enforcing-ai-act-rules-and-new-transparency-requirements-2-august)
+- [EU Data Act – Verordnung (EU) 2023/2854](https://eur-lex.europa.eu/eli/reg/2023/2854/oj/eng)
+- [EU-Kommission: Data Act gilt seit 12. September 2025](https://commission.europa.eu/news-and-media/news/data-act-enters-force-what-it-means-you-2024-01-11_en)
+- [Cyber Resilience Act – Verordnung (EU) 2024/2847](https://eur-lex.europa.eu/eli/reg/2024/2847/oj/eng)
+- [EU-Kommission: Überblick zum Cyber Resilience Act](https://commission.europa.eu/news-and-media/news/safer-digital-future-new-cyber-rules-become-law-2024-12-10_en)
+- [Neue Produkthaftungsrichtlinie – Richtlinie (EU) 2024/2853](https://eur-lex.europa.eu/eli/dir/2024/2853/oj/eng)
+- [Allgemeine Produktsicherheitsverordnung – Verordnung (EU) 2023/988](https://eur-lex.europa.eu/eli/reg/2023/988/oj/eng)
+- [Typgenehmigung und Fahrzeugmarktüberwachung – Verordnung (EU) 2018/858](https://eur-lex.europa.eu/eli/reg/2018/858/oj/eng)
+
+**Entscheidungen**
+
+| Entscheidung | Begründung | Verantwortlich |
+|---|---|---|
+| Customer Journeys bilden sieben Phasen ab | Macht Brüche und Sicherheitsmomente sichtbar | Product/UX |
+| Standard- und Expertenansicht vorsehen | Sarah und Jonas benötigen unterschiedliche Informationstiefe | Product/UX |
+| Gebrauchtwagenbericht als Momentaufnahme kennzeichnen | Verhindert falsche Sicherheit und Gutachtenwirkung | Product/Legal |
+| Compliance-Gates vor Pilot und Vermarktung einführen | Kritische Pflichten hängen vom finalen Produktumfang ab | Governance |
+| Rein lesender Zugriff bleibt harte MVP-Grenze | Reduziert Sicherheits-, Haftungs- und Einstufungsrisiken | Technical/Product |
+
+**Offene Punkte**
+
+- [ ] Customer Journeys mit realen Nutzern validieren
+- [ ] EU-Zielmärkte und Geschäftsmodell festlegen
+- [ ] Datenfluss, Hostingstandort und KI-Anbieter bestimmen
+- [ ] Verantwortliche Personen für Privacy, Security, Automotive und Legal benennen
+- [ ] AI-Act-Classification Memo erstellen
+- [ ] DPIA-Screening durchführen
+- [ ] CRA-Produktrolle und Konformitätsweg prüfen
+- [ ] Haftungs- und Verbrauchertexte juristisch prüfen
+- [ ] Risikostufen mit Kfz-Fachperson definieren und testen
+
+**Nächste Schritte**
+
+- [ ] Customer-Journey-Erkenntnisse in UX-Anforderungen überführen
+- [ ] Wireframes für Verbindung, Scan, Ergebnis und Bericht erstellen
+- [ ] Compliance-Anforderungen als GitHub Issues anlegen
+- [ ] Datenschutz- und Security-by-Design-Checklisten in die Definition of Done aufnehmen
+- [ ] Internen OBD-II-Prototyp nur mit Testdaten oder Simulator starten
+
+---
+
 ## 2026-08-29 – Projektidee und Projektgrundlage definieren
 
 **Prompt**
