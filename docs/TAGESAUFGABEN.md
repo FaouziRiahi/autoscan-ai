@@ -79,6 +79,255 @@ Kurze Beschreibung des erwarteten Ergebnisses.
 
 # Tagesprotokolle
 
+## 2026-08-11 – Personas und User Stories erstellen
+
+**Prompt**
+
+> 2–3 Personas erstellen  
+> 5–10 User Stories erstellen
+
+**Tagesziel**
+
+Die wichtigsten Nutzergruppen von AutoScan AI konkret beschreiben und ihre zentralen Bedürfnisse in priorisierbare, testbare User Stories für den MVP überführen.
+
+**Aufgaben**
+
+- [x] Drei relevante Personas für AutoScan AI definieren
+- [x] Bedürfnisse, Ziele, Probleme und Nutzungssituationen dokumentieren
+- [x] Acht User Stories für den MVP formulieren
+- [x] Priorität und Akzeptanzkriterien ergänzen
+- [ ] Personas durch spätere Nutzerinterviews validieren
+
+### Persona 1 – Sarah, die sicherheitsbewusste Fahrzeughalterin
+
+| Merkmal | Beschreibung |
+|---|---|
+| Alter | 34 Jahre |
+| Beruf | Bürokauffrau |
+| Fahrzeugwissen | Gering |
+| Fahrzeug | Kompaktwagen, Baujahr 2018 |
+| Digitale Erfahrung | Nutzt regelmäßig Smartphone-Apps |
+| Hauptziel | Schnell verstehen, ob eine Warnleuchte dringend ist |
+| Motivation | Sicher fahren und unnötige Werkstattkosten vermeiden |
+| Frustrationen | Unverständliche Fehlercodes, widersprüchliche Internetforen und Angst vor hohen Reparaturkosten |
+| Nutzungssituation | Eine Warnleuchte erscheint vor einer längeren Fahrt |
+| Erwartung | Klare Erklärung, verständliche Risikostufe und konkrete nächste Schritte |
+
+**Zitat**
+
+> Ich möchte wissen, ob ich noch sicher weiterfahren kann oder sofort eine Werkstatt brauche.
+
+### Persona 2 – Jonas, der technisch interessierte Hobbymechaniker
+
+| Merkmal | Beschreibung |
+|---|---|
+| Alter | 27 Jahre |
+| Beruf | Softwareentwickler |
+| Fahrzeugwissen | Mittel |
+| Fahrzeug | Älterer Gebrauchtwagen, Baujahr 2012 |
+| Digitale Erfahrung | Hoch |
+| Hauptziel | Fahrzeugprobleme selbst eingrenzen und Diagnosedaten nachvollziehen |
+| Motivation | Kleinere Probleme selbst verstehen und Reparaturen besser vorbereiten |
+| Frustrationen | Oberflächliche Diagnose-Apps, fehlender Kontext und nicht nachvollziehbare KI-Aussagen |
+| Nutzungssituation | Unruhiger Motorlauf oder wiederkehrende Motorkontrollleuchte |
+| Erwartung | Fehlercode, technische Details, mögliche Ursachen und transparente Quellen |
+
+**Zitat**
+
+> Ich brauche mehr als nur eine Codebeschreibung – ich will nachvollziehen, warum diese Ursachen wahrscheinlich sind.
+
+### Persona 3 – Mehmet, der Gebrauchtwagenkäufer
+
+| Merkmal | Beschreibung |
+|---|---|
+| Alter | 42 Jahre |
+| Beruf | Selbstständiger |
+| Fahrzeugwissen | Grundkenntnisse |
+| Fahrzeug | Möchte einen gebrauchten Familienwagen kaufen |
+| Digitale Erfahrung | Mittel |
+| Hauptziel | Vor dem Kauf mögliche technische Probleme erkennen |
+| Motivation | Versteckte Mängel und unerwartete Folgekosten vermeiden |
+| Frustrationen | Unsicherheit bei Probefahrten und fehlende neutrale Informationen |
+| Nutzungssituation | Fahrzeugprüfung während einer Besichtigung |
+| Erwartung | Schneller Scan, verständliche Zusammenfassung und exportierbarer Bericht |
+
+**Zitat**
+
+> Vor dem Kauf möchte ich eine verständliche Übersicht möglicher Probleme mitnehmen können.
+
+### User Stories
+
+#### US-01 – OBD-II-Adapter verbinden
+
+**Als** Fahrzeughalter  
+**möchte ich** einen unterstützten OBD-II-Adapter einfach mit der App verbinden,  
+**damit** ich eine Fahrzeugdiagnose ohne technische Vorkenntnisse starten kann.
+
+**Priorität:** Must-have
+
+**Akzeptanzkriterien**
+
+- Die App zeigt gefundene unterstützte Adapter an.
+- Der Nutzer kann einen Adapter auswählen und verbinden.
+- Verbindungsstatus und Fehler werden verständlich angezeigt.
+- Ohne erfolgreiche Verbindung kann keine Diagnose gestartet werden.
+
+#### US-02 – Diagnose starten
+
+**Als** Fahrzeughalter  
+**möchte ich** einen geführten Fahrzeugscan starten,  
+**damit** vorhandene standardisierte Fehlercodes ausgelesen werden.
+
+**Priorität:** Must-have
+
+**Akzeptanzkriterien**
+
+- Der Scan kann mit einer klar erkennbaren Aktion gestartet werden.
+- Fortschritt und Abschluss werden sichtbar angezeigt.
+- Der MVP verwendet ausschließlich lesende OBD-II-Befehle.
+- Ein Abbruch beschädigt weder App noch Fahrzeugverbindung.
+
+#### US-03 – Fehlercode verständlich erklären
+
+**Als** Nutzer ohne Kfz-Fachwissen  
+**möchte ich** jeden gefundenen Fehlercode in verständlicher Sprache erklärt bekommen,  
+**damit** ich seine Bedeutung nachvollziehen kann.
+
+**Priorität:** Must-have
+
+**Akzeptanzkriterien**
+
+- Technischer Code und verständliche Bezeichnung werden angezeigt.
+- Die Erklärung vermeidet unnötigen Fachjargon.
+- Technische Begriffe werden bei Bedarf erläutert.
+- Die App weist darauf hin, dass das Ergebnis keine Werkstattdiagnose ersetzt.
+
+#### US-04 – Dringlichkeit erkennen
+
+**Als** sicherheitsbewusste Fahrzeughalterin  
+**möchte ich** die Dringlichkeit eines Problems erkennen,  
+**damit** ich entscheiden kann, ob eine Weiterfahrt vertretbar ist oder fachliche Hilfe benötigt wird.
+
+**Priorität:** Must-have
+
+**Akzeptanzkriterien**
+
+- Jedes Ergebnis erhält eine verständliche Risikostufe.
+- Sicherheitskritische Hinweise werden deutlich hervorgehoben.
+- Bei unzureichender Datenlage gibt die App keine definitive Freigabe zur Weiterfahrt.
+- Im Zweifel empfiehlt die App eine professionelle Prüfung.
+
+#### US-05 – Mögliche Ursachen nachvollziehen
+
+**Als** technisch interessierter Nutzer  
+**möchte ich** mögliche Ursachen eines Fehlercodes sehen,  
+**damit** ich das Problem besser eingrenzen und ein Werkstattgespräch vorbereiten kann.
+
+**Priorität:** Should-have
+
+**Akzeptanzkriterien**
+
+- Mehrere mögliche Ursachen werden als Hypothesen dargestellt.
+- Ursachen sind nach Plausibilität oder typischer Häufigkeit geordnet, sofern belastbare Daten vorliegen.
+- Vermutungen werden nicht als gesicherte Diagnose dargestellt.
+- Die Grundlage der technischen Information ist nachvollziehbar.
+
+#### US-06 – Nächste Schritte erhalten
+
+**Als** Fahrzeughalter  
+**möchte ich** konkrete und sichere nächste Schritte vorgeschlagen bekommen,  
+**damit** ich angemessen auf das Diagnoseergebnis reagieren kann.
+
+**Priorität:** Must-have
+
+**Akzeptanzkriterien**
+
+- Empfehlungen unterscheiden zwischen Beobachten, zeitnah prüfen und sofort anhalten beziehungsweise Hilfe rufen.
+- Die App empfiehlt keine riskanten Reparaturen.
+- Empfehlungen berücksichtigen die angezeigte Risikostufe.
+- Grenzen und Unsicherheiten werden transparent genannt.
+
+#### US-07 – Diagnosebericht speichern und exportieren
+
+**Als** Gebrauchtwagenkäufer oder Fahrzeughalter  
+**möchte ich** einen Diagnosebericht speichern und exportieren,  
+**damit** ich ihn später vergleichen oder mit einer Werkstatt teilen kann.
+
+**Priorität:** Should-have
+
+**Akzeptanzkriterien**
+
+- Der Bericht enthält Datum, Fahrzeugbezug, erkannte Codes und Erklärungen.
+- Der Nutzer kann den Bericht vor dem Export prüfen.
+- Personenbezogene oder identifizierende Daten werden nur nach transparenter Auswahl aufgenommen.
+- Der Bericht kennzeichnet Zeitpunkt und Grenzen der Diagnose.
+
+#### US-08 – Datenschutz kontrollieren
+
+**Als** datenschutzbewusster Nutzer  
+**möchte ich** erkennen und kontrollieren, welche Fahrzeug- und Nutzerdaten gespeichert werden,  
+**damit** ich AutoScan AI vertrauensvoll verwenden kann.
+
+**Priorität:** Must-have
+
+**Akzeptanzkriterien**
+
+- Die App informiert vor der Speicherung über Art und Zweck der Daten.
+- Nicht erforderliche Daten werden standardmäßig nicht erhoben.
+- Der Nutzer kann gespeicherte Daten einsehen und löschen.
+- Übertragene Daten werden angemessen verschlüsselt.
+
+**Ergebnisse**
+
+- Drei primäre Nutzergruppen als prüfbare Personas beschrieben
+- Acht MVP-nahe User Stories mit Priorität und Akzeptanzkriterien erstellt
+- Anforderungen zu Sicherheit, Transparenz und Datenschutz direkt in die Stories integriert
+
+**Entscheidungen**
+
+| Entscheidung | Begründung | Verantwortlich |
+|---|---|---|
+| Drei Personas statt zwei | Deckt Alltag, technische Nutzung und Gebrauchtwagenprüfung ab | Product Owner |
+| Private Fahrzeughalter bleiben MVP-Fokus | Entspricht der bisherigen Projektdefinition | Product Owner |
+| MoSCoW-Priorisierung verwenden | Einfache Trennung zwischen Must-have und Should-have | Product Owner |
+| Akzeptanzkriterien je User Story dokumentieren | Stories werden testbar und backlogfähig | Product Owner / QA |
+| Sicherheits- und Datenschutzanforderungen früh integrieren | Verhindert spätes Nachrüsten kritischer Anforderungen | Product Owner / Security Owner |
+
+**Chancen und Risiken**
+
+| Typ | Beschreibung | Maßnahme |
+|---|---|---|
+| Chance | Personas verbessern Produkt- und UX-Entscheidungen | Personas bei Design und Backlog-Priorisierung referenzieren |
+| Chance | Akzeptanzkriterien beschleunigen Entwicklung und Tests | Kriterien in Issues und Testfälle übernehmen |
+| Risiko | Personas beruhen zunächst auf Annahmen | Interviews und Tests mit echten Nutzern durchführen |
+| Risiko | Gebrauchtwagenprüfung könnte falsche Sicherheit vermitteln | Bericht klar als Momentaufnahme und nicht als Kaufgutachten kennzeichnen |
+| Risiko | Dringlichkeitsbewertung kann haftungsrelevant sein | Fachliche und juristische Prüfung sowie konservative Sicherheitslogik |
+
+**Governance und Compliance**
+
+- Personas enthalten keine Daten realer identifizierbarer Personen.
+- Nutzungsdaten dürfen nur zweckgebunden und datensparsam verarbeitet werden.
+- Sicherheitsrelevante User Stories benötigen fachliche und QA-Freigabe.
+- Aussagen zur Weiterfahrt müssen konservativ formuliert und juristisch geprüft werden.
+- Die Herkunft technischer Diagnoseinformationen muss nachvollziehbar bleiben.
+
+**Offene Punkte**
+
+- [ ] Personas mit mindestens fünf potenziellen Nutzern validieren
+- [ ] Unterstützte Fahrzeugtypen und OBD-II-Adapter konkretisieren
+- [ ] Risikostufen und Eskalationsregeln fachlich definieren
+- [ ] User Stories als GitHub Issues in einen priorisierten Backlog übertragen
+- [ ] Nichtfunktionale Anforderungen für Sicherheit, Leistung und Verfügbarkeit ergänzen
+
+**Nächste Schritte**
+
+- [ ] User Journey für Sarahs Warnleuchten-Szenario erstellen
+- [ ] MVP-Backlog aus den User Stories ableiten
+- [ ] Wireframes für Verbindung, Scan und Diagnoseergebnis entwerfen
+- [ ] Definition of Done für sicherheitsrelevante Stories festlegen
+
+---
+
 ## 2026-08-29 – Projektidee und Projektgrundlage definieren
 
 **Prompt**
