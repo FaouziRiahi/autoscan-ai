@@ -894,6 +894,390 @@ Fragen:
 
 ---
 
+## 2026-08-14 – Interviewauswertung und Einarbeitung des Feedbacks
+
+**Prompt**
+
+> Werte die Interviews von gestern aus.  
+> Arbeite das Feedback ein.
+
+**Tagesziel**
+
+Die Ergebnisse des simulierten Interviews vom 13.08.2026 strukturiert auswerten, zentrale Muster und Hypothesen ableiten und das Feedback nachvollziehbar in Produktanforderungen, User Stories, UX-Prioritäten und nächste Research-Schritte überführen.
+
+> **Evidenzhinweis:** Am 13.08.2026 wurde ein KI-simuliertes Interview mit der Persona Sarah durchgeführt. Die folgenden Ergebnisse sind daher vorläufige Hypothesen und keine validierten Aussagen realer Nutzer. Änderungen werden als überprüfbare Produktannahmen behandelt.
+
+### Auswertungsmethode
+
+Die Interviewaussagen wurden in fünf Schritten ausgewertet:
+
+1. Relevante Aussagen und Beobachtungen extrahieren.
+2. Aussagen thematisch clustern.
+3. Bedürfnisse, Probleme und Risiken ableiten.
+4. Produktanforderungen und Änderungen formulieren.
+5. Jede Änderung mit einer Validierungsfrage verbinden.
+
+### Evidenzstufen
+
+| Stufe | Bedeutung | Verwendung |
+|---|---|---|
+| E0 – Annahme | Idee des Projektteams ohne Interviewbezug | Noch nicht prioritätsentscheidend |
+| E1 – Synthetischer Hinweis | Beobachtung aus KI-Simulation | Für Prototypen und Interviewvorbereitung |
+| E2 – Einzelne reale Aussage | Aussage aus einem echten Interview | Als Hinweis, nicht als Muster |
+| E3 – Wiederkehrendes Muster | Ähnliche Aussage aus mehreren Interviews | Für begründete Priorisierung |
+| E4 – Verhaltensnachweis | Beobachtung aus Nutzungs- oder Usability-Test | Für validierte Produktentscheidung |
+
+Alle Ergebnisse dieser Tagesaufgabe besitzen derzeit höchstens die Stufe **E1**.
+
+## Thematische Auswertung
+
+### Cluster 1 – Dringlichkeit und Orientierung
+
+**Beobachtungen**
+
+- Sarah möchte zuerst wissen, wie dringend die Situation ist.
+- Die technische Codebeschreibung allein löst ihr Problem nicht.
+- Eine Aussage zur Weiterfahrt kann gefährliche Sicherheit erzeugen.
+- Eine reine Ampelfarbe wird als nicht ausreichend eingeschätzt.
+
+**Abgeleitetes Bedürfnis**
+
+Der Nutzer benötigt eine vorsichtige, verständliche Orientierung mit Begründung und konkreten nächsten Schritten.
+
+**Produktimplikation**
+
+- Risikostufe prominent darstellen.
+- Risikostufe immer textlich begründen.
+- Keine definitive Fahrtfreigabe geben.
+- Unsicherheit und fehlende Daten sichtbar machen.
+- Handlungsempfehlung direkt mit der Risikostufe verbinden.
+
+### Cluster 2 – Vertrauen in Adapter und Fahrzeugzugriff
+
+**Beobachtungen**
+
+- Ein unbekannter OBD-II-Adapter erzeugt Unsicherheit.
+- Nutzer fürchten, versehentlich Fahrzeugdaten zu verändern.
+- Kompatibilität von Adapter und Fahrzeug ist vorab unklar.
+
+**Abgeleitetes Bedürfnis**
+
+Der Nutzer muss vor dem Scan verstehen, was angeschlossen wird, was die App tut und was sie technisch nicht tun kann.
+
+**Produktimplikation**
+
+- Sichtbarer Hinweis „Nur lesender Zugriff“.
+- Schreibende OBD-II-Befehle technisch blockieren.
+- Unterstützte Adapter und Fahrzeuge prüfen.
+- Schrittweise Anschlussanleitung mit Bildern.
+- Verbindungsfehler mit konkreten Lösungen erklären.
+
+### Cluster 3 – Verständliche und nachvollziehbare KI
+
+**Beobachtungen**
+
+- KI-Erklärungen werden akzeptiert, wenn ihre Grenzen sichtbar sind.
+- Vermutungen dürfen nicht wie bestätigte Diagnosen wirken.
+- Quellen und eine kurze Begründung erhöhen voraussichtlich das Vertrauen.
+
+**Abgeleitetes Bedürfnis**
+
+Nutzer wollen einfache Erklärungen, aber gleichzeitig erkennen können, woher Aussagen stammen und wie sicher sie sind.
+
+**Produktimplikation**
+
+- Fakten, Hypothesen und Empfehlungen visuell trennen.
+- Technische Datenbank als Primärquelle verwenden.
+- KI-Einsatz transparent kennzeichnen.
+- Quellen beziehungsweise Datengrundlage anzeigen.
+- Technische Detailansicht optional anbieten.
+
+### Cluster 4 – Stressfester Diagnoseablauf
+
+**Beobachtungen**
+
+- Die Nutzung findet möglicherweise in einer belastenden Situation statt.
+- Zu viele Schritte und Fachbegriffe erhöhen die Abbruchgefahr.
+- Ein Schnellmodus wurde als attraktive Lösung genannt.
+
+**Abgeleitetes Bedürfnis**
+
+Der Kernablauf muss kurz, geführt und auch unter Stress verständlich sein.
+
+**Produktimplikation**
+
+- Schnellmodus mit den Schritten Verbinden, Scannen und Handeln.
+- Pro Bildschirm nur eine primäre Aktion.
+- Fortschritt und verbleibende Schritte anzeigen.
+- Einfache Sprache als Standard.
+- Experteninformationen nachgelagert bereitstellen.
+
+### Cluster 5 – Datenschutz und Bericht
+
+**Beobachtungen**
+
+- Lokale Speicherung wird gegenüber unklarer Cloud-Speicherung bevorzugt.
+- Nutzer möchten selbst auswählen, welche Fahrzeugdaten geteilt werden.
+- Der Diagnosebericht kann das Werkstattgespräch unterstützen.
+
+**Abgeleitetes Bedürfnis**
+
+Nutzer benötigen Kontrolle über Speicherung, Inhalt und Weitergabe ihrer Daten.
+
+**Produktimplikation**
+
+- Lokale Speicherung als bevorzugte MVP-Option prüfen.
+- Cloud-Synchronisation nur optional und transparent.
+- Berichtsvorschau vor dem Export.
+- VIN und andere identifizierende Daten standardmäßig nicht aufnehmen.
+- Löschen und Exportieren einfach zugänglich machen.
+
+## Affinity Map – Zusammenfassung
+
+| Themencluster | Nutzerproblem | Bedürfnis | Produktantwort | Evidenz |
+|---|---|---|---|---|
+| Dringlichkeit | Unklarheit über sichere Reaktion | Orientierung | Begründete Risikostufe und nächste Schritte | E1 |
+| Vertrauen | Angst vor Fahrzeugveränderung | Kontrolle | Sichtbarer und technisch erzwungener Nur-Lese-Modus | E1 |
+| KI-Erklärung | Sorge vor erfundenen Aussagen | Nachvollziehbarkeit | Quellen, Unsicherheit und Hypothesenkennzeichnung | E1 |
+| Bedienung | Stress und technische Komplexität | Einfachheit | Geführter Schnellmodus | E1 |
+| Datenschutz | Unklare Speicherung und Weitergabe | Datenkontrolle | Lokal zuerst, Vorschau und selektiver Export | E1 |
+| Werkstatt | Schwierige Kommunikation | Teilbare Zusammenfassung | Verständlicher Diagnosebericht | E1 |
+
+## Priorisierte Erkenntnisse
+
+| Rang | Erkenntnis | Nutzerwert | Risiko bei Nichtbeachtung | Evidenz | Entscheidung |
+|---:|---|---|---|---|---|
+| 1 | Dringlichkeit und nächste Schritte zuerst zeigen | Sehr hoch | Gefährliche Fehlinterpretation | E1 | In MVP-Anforderung aufnehmen |
+| 2 | Nur-Lese-Zugriff sichtbar und technisch garantieren | Sehr hoch | Sicherheits- und Vertrauensverlust | E1 | Harte MVP-Grenze |
+| 3 | Risikostufe begründen und Unsicherheit zeigen | Sehr hoch | Falsche Sicherheit | E1 | In Ergebnisdesign aufnehmen |
+| 4 | Einfachen Schnellmodus entwickeln | Hoch | Abbruch in Stresssituation | E1 | Prototyp erstellen |
+| 5 | KI-Aussagen nachvollziehbar machen | Hoch | Vertrauens- und Haftungsrisiko | E1 | Quellen- und Statusmodell definieren |
+| 6 | Datenschutzfreundliche Speicherung | Hoch | Ablehnung und Compliance-Risiko | E1 | Lokal-first prüfen |
+| 7 | Bericht selektiv exportieren | Mittel bis hoch | Unnötige Datenweitergabe | E1 | Should-have bestätigen |
+
+## Eingearbeitetes Feedback
+
+### Änderung 1 – Ergebnisansicht neu priorisieren
+
+**Vorher**
+
+Technischer Fehlercode und Erklärung standen gedanklich im Mittelpunkt.
+
+**Nachher**
+
+Die Ergebnisansicht erhält folgende Reihenfolge:
+
+1. unmittelbare Handlung,
+2. Risikostufe,
+3. kurze Begründung,
+4. Unsicherheit und Datenlücken,
+5. verständliche Erklärung,
+6. mögliche Ursachen,
+7. technische Details und Quellen.
+
+**Begründung:** In einer Stresssituation benötigt der Nutzer zuerst Orientierung und erst danach technische Tiefe.
+
+### Änderung 2 – Schnellmodus als MVP-Ablauf
+
+Der MVP-Kernablauf wird vorläufig auf drei Hauptschritte reduziert:
+
+1. **Verbinden** – Adapter finden, Kompatibilität prüfen, Nur-Lese-Modus erklären.
+2. **Scannen** – Fortschritt anzeigen und ausschließlich lesende Befehle ausführen.
+3. **Handeln** – Dringlichkeit, Begründung und sichere nächste Schritte zeigen.
+
+Eine optionale Expertenansicht enthält zusätzliche technische Informationen.
+
+### Änderung 3 – Vertrauensschicht ergänzen
+
+Jede Diagnoseausgabe soll künftig sichtbar unterscheiden:
+
+| Informationstyp | Darstellung |
+|---|---|
+| Gemessener Wert | „Vom Fahrzeug ausgelesen“ |
+| Standardisierte Codebedeutung | „Technische Referenz“ |
+| Mögliche Ursache | „Mögliche Ursache, nicht bestätigt“ |
+| KI-Erklärung | „KI-gestützte Erläuterung“ |
+| Sicherheitsregel | „Geprüfte Sicherheitsempfehlung“ |
+| Fehlende Information | „Nicht genügend Daten“ |
+
+### Änderung 4 – Datenschutzfreundlicher Bericht
+
+- Diagnose zunächst lokal speichern.
+- Vor Export eine Vorschau anzeigen.
+- VIN, Standort und Kontodaten nicht automatisch einfügen.
+- Nutzer wählt die zu teilenden Daten aus.
+- Bericht enthält Diagnosezeitpunkt und Hinweis „Momentaufnahme“.
+- Löschen muss direkt aus der Berichtshistorie möglich sein.
+
+### Änderung 5 – Adapter-Onboarding erweitern
+
+- Fahrzeug und Adapter vor dem Scan auf bekannte Kompatibilität prüfen.
+- Anschluss in wenigen bebilderten Schritten erklären.
+- Nur-Lese-Modus vor Scanbeginn bestätigen.
+- Verbindungsstatus verständlich anzeigen.
+- Fehlerhilfe nach Ursache strukturieren: Berechtigung, Bluetooth/WLAN, Adapter, Zündung und Fahrzeug.
+
+## Aktualisierte User Stories
+
+### US-04A – Dringlichkeit mit Begründung erkennen
+
+| Feld | Inhalt |
+|---|---|
+| Priorität | Must-have |
+| User Story | Als Fahrzeughalter möchte ich Dringlichkeit, Begründung und Unsicherheit eines Diagnoseergebnisses sehen, damit ich vorsichtig und nachvollziehbar reagieren kann. |
+| Akzeptanzkriterium 1 | Die unmittelbare Handlung wird vor technischen Details angezeigt. |
+| Akzeptanzkriterium 2 | Die Risikostufe wird mit Text und nicht nur mit Farbe dargestellt. |
+| Akzeptanzkriterium 3 | Eine kurze Begründung erklärt die Einstufung. |
+| Akzeptanzkriterium 4 | Fehlende Daten und Unsicherheit werden sichtbar angezeigt. |
+| Akzeptanzkriterium 5 | Die App erteilt keine definitive Fahrtfreigabe. |
+| Akzeptanzkriterium 6 | Sicherheitskritische Fälle empfehlen professionelle Hilfe. |
+
+### US-09 – Geführten Schnellmodus verwenden
+
+| Feld | Inhalt |
+|---|---|
+| Priorität | Must-have |
+| User Story | Als besorgter Fahrzeughalter möchte ich einen kurzen geführten Diagnoseablauf nutzen, damit ich auch unter Stress schnell die nächsten sicheren Schritte erkenne. |
+| Akzeptanzkriterium 1 | Der Ablauf besteht aus Verbinden, Scannen und Handeln. |
+| Akzeptanzkriterium 2 | Jeder Bildschirm besitzt eine eindeutige primäre Aktion. |
+| Akzeptanzkriterium 3 | Fortschritt und aktueller Schritt werden angezeigt. |
+| Akzeptanzkriterium 4 | Die Standardsprache ist verständlich und vermeidet Fachjargon. |
+| Akzeptanzkriterium 5 | Technische Details sind optional erreichbar. |
+| Akzeptanzkriterium 6 | Der Nutzer kann den Ablauf sicher abbrechen. |
+
+### US-10 – Herkunft einer Diagnoseaussage verstehen
+
+| Feld | Inhalt |
+|---|---|
+| Priorität | Must-have |
+| User Story | Als Nutzer möchte ich erkennen, ob eine Information gemessen, aus einer Referenz übernommen oder durch KI erklärt wurde, damit ich ihre Verlässlichkeit besser einschätzen kann. |
+| Akzeptanzkriterium 1 | Gemessene Werte, Referenzdaten und KI-Erklärungen werden unterschieden. |
+| Akzeptanzkriterium 2 | Mögliche Ursachen werden nicht als bestätigte Fakten dargestellt. |
+| Akzeptanzkriterium 3 | Verfügbare Quellen oder Datengrundlagen sind einsehbar. |
+| Akzeptanzkriterium 4 | Fehlende Daten werden ausdrücklich genannt. |
+| Akzeptanzkriterium 5 | Die verwendete Diagnose- beziehungsweise Regelversion wird protokolliert. |
+
+### US-11 – Nur-Lese-Modus nachvollziehen
+
+| Feld | Inhalt |
+|---|---|
+| Priorität | Must-have |
+| User Story | Als vorsichtiger Nutzer möchte ich vor dem Scan erkennen, dass AutoScan AI keine Fahrzeugdaten verändert, damit ich den Adapter vertrauensvoll verwenden kann. |
+| Akzeptanzkriterium 1 | Vor Scanbeginn wird „Nur lesender Zugriff“ angezeigt. |
+| Akzeptanzkriterium 2 | Schreibende OBD-II-Befehle sind technisch blockiert. |
+| Akzeptanzkriterium 3 | Automatisierte Tests prüfen diese Beschränkung. |
+| Akzeptanzkriterium 4 | Die App erklärt verständlich, welche Daten gelesen werden. |
+| Akzeptanzkriterium 5 | Ein Scan kann ohne Fahrzeugänderung abgebrochen werden. |
+
+## Auswirkung auf den MVP-Backlog
+
+| Backlog-Element | Vorher | Neu | Änderung |
+|---|---|---|---|
+| OBD-II-Verbindung | Must-have | Must-have | Kompatibilitätsprüfung und Fehlerhilfe ergänzt |
+| Diagnose starten | Must-have | Must-have | Schnellmodus und Fortschrittsanzeige präzisiert |
+| Fehlercode erklären | Must-have | Must-have | Herkunft und KI-Kennzeichnung ergänzt |
+| Dringlichkeit | Must-have | Must-have, höchste Priorität | Begründung, Unsicherheit und keine Fahrtfreigabe ergänzt |
+| Mögliche Ursachen | Should-have | Should-have | Klare Hypothesenkennzeichnung ergänzt |
+| Nächste Schritte | Must-have | Must-have, höchste Priorität | Vor technischen Details anzeigen |
+| Berichtsexport | Should-have | Should-have | Vorschau und selektive Datenauswahl ergänzt |
+| Datenschutz | Must-have | Must-have | Lokal-first und direktes Löschen ergänzt |
+| Schnellmodus | Nicht separat definiert | Must-have | Neue US-09 |
+| Informationsherkunft | Nicht separat definiert | Must-have | Neue US-10 |
+| Nur-Lese-Vertrauen | Technische Grenze | Must-have Story | Neue US-11 |
+
+## Wireframe-Anforderungen für die nächste Designphase
+
+### Bildschirm 1 – Verbindung
+
+- Titel: „Fahrzeug verbinden“
+- sichtbarer Status: „Nur lesender Zugriff“
+- Fahrzeug-/Adapter-Kompatibilitätsstatus
+- kurze bebilderte Anschlussanleitung
+- eindeutige Aktion: „Adapter suchen“
+- Fehlerhilfe bei fehlgeschlagener Verbindung
+
+### Bildschirm 2 – Scan
+
+- Titel: „Fahrzeug wird geprüft“
+- Schritt- und Fortschrittsanzeige
+- Erklärung, welche Daten gelesen werden
+- sichere Abbruchmöglichkeit
+- keine technischen Rohdaten als Standard
+
+### Bildschirm 3 – Ergebnis
+
+- unmittelbare Handlung ganz oben
+- Risikostufe mit Text, Farbe und Symbol
+- kurze Begründung
+- sichtbare Unsicherheit beziehungsweise Datenlücken
+- einfache Erklärung
+- optionale Ursachen und technische Details
+- Aktionen: Bericht speichern, teilen oder löschen
+
+## Validierungsplan
+
+| Hypothese | Methode | Teilnehmer | Erfolgssignal |
+|---|---|---:|---|
+| Handlung muss zuerst stehen | Card Sorting mit Ergebnisinformationen | 5–7 | Mehrheit priorisiert Handlung/Dringlichkeit |
+| Nur-Lese-Hinweis erhöht Vertrauen | Vergleich zweier Onboarding-Varianten | 5–7 | Höheres erklärtes Verständnis und Vertrauen |
+| Risikostufe braucht Begründung | Usability-Test mit zwei Ergebnisvarianten | 5 | Nutzer interpretiert Ergebnis korrekt |
+| Schnellmodus reduziert Überforderung | Klickbarer Prototyp und Task-Test | 5 | Hohe Abschlussrate ohne Moderationshilfe |
+| Lokal-first wird bevorzugt | Interview und Auswahlaufgabe | 5–7 | Klare Präferenz mit nachvollziehbarem Grund |
+| Selektiver Export wird verstanden | Bericht-Prototyp | 5 | Nutzer erkennt und kontrolliert geteilte Daten |
+
+## Definition of Done – Research-basierte Anforderungen
+
+Eine aus Interviewfeedback abgeleitete Funktion gilt erst als ausreichend bearbeitet, wenn:
+
+- [ ] die zugrunde liegende Hypothese dokumentiert ist,
+- [ ] die Evidenzstufe angegeben ist,
+- [ ] Sicherheits- und Datenschutzfolgen bewertet sind,
+- [ ] Akzeptanzkriterien definiert sind,
+- [ ] mindestens ein Prototyp- oder Usability-Test durchgeführt wurde,
+- [ ] Ergebnis und Entscheidung nachvollziehbar dokumentiert sind,
+- [ ] bei sicherheitskritischen Funktionen eine fachliche Freigabe erfolgt ist.
+
+**Ergebnisse**
+
+- Simuliertes Interview systematisch ausgewertet
+- Fünf Themencluster und sechs zentrale Bedürfnisse dokumentiert
+- Feedback in fünf konkrete Produktänderungen überführt
+- Vier User Stories neu erstellt beziehungsweise präzisiert
+- MVP-Backlog und Wireframe-Anforderungen aktualisiert
+- Validierungsplan für echte Interviews und Prototypentests erstellt
+- Evidenzgrenze der KI-Simulation transparent berücksichtigt
+
+**Entscheidungen**
+
+| Entscheidung | Begründung | Verantwortlich |
+|---|---|---|
+| Feedback wird vorläufig eingearbeitet | Hilft bei Prototyp und realen Interviews | Product/UX |
+| Keine Annahme erhält mehr als E1 | Es liegt noch keine reale Nutzerevidenz vor | Research Lead |
+| Dringlichkeit und Handlung stehen vor technischen Details | Entspricht dem wichtigsten simulierten Bedürfnis | Product/UX |
+| Schnellmodus wird Must-have-Hypothese | Stressfester Kernablauf ist zentral | Product Owner |
+| Lokal-first wird geprüft, nicht endgültig beschlossen | Technische und reale Nutzerpräferenz noch offen | Privacy/Technical |
+| Änderungen müssen durch reale Tests bestätigt werden | Verhindert Überbewertung synthetischer Forschung | Governance |
+
+**Offene Punkte**
+
+- [ ] Mindestens fünf reale Interviews durchführen
+- [ ] Card Sorting zur Informationspriorität durchführen
+- [ ] Zwei Varianten der Risikodarstellung entwerfen
+- [ ] Schnellmodus als klickbaren Prototyp bauen
+- [ ] Lokal- und Cloud-Speicherung technisch vergleichen
+- [ ] Sicherheitslogik mit Kfz-Fachperson prüfen
+- [ ] Nach echten Interviews Evidenzstufen aktualisieren
+
+**Nächste Schritte**
+
+- [ ] Figma-Wireframes für Verbindung, Scan und Ergebnis erstellen
+- [ ] Interviewteilnehmer rekrutieren
+- [ ] Ergebnisse aus echten Interviews in dieselben Cluster einordnen
+- [ ] User Stories US-04A, US-09, US-10 und US-11 als GitHub Issues anlegen
+- [ ] MVP-Backlog nach realer Validierung erneut priorisieren
+
+---
+
 ## 2026-08-29 – Projektidee und Projektgrundlage definieren
 
 **Prompt**
