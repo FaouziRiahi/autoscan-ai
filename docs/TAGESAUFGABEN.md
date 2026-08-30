@@ -560,6 +560,340 @@ Bedingungen:
 
 ---
 
+## 2026-08-13 – Interviewleitfaden und simuliertes KI-Interview
+
+**Prompt**
+
+> Erstelle einen Interviewleitfaden.  
+> Führe ein Interview mit Hilfe von KI oder einem echten Menschen durch.
+
+**Tagesziel**
+
+Einen wiederverwendbaren, neutral formulierten Interviewleitfaden für potenzielle AutoScan-AI-Nutzer erstellen und ihn in einem simulierten KI-Interview erproben. Das Interview soll Annahmen zu Problemen, Verhalten, Vertrauen, Sicherheitsbedürfnis und Produktanforderungen sichtbar machen.
+
+> **Research-Hinweis:** Das folgende Interview ist eine KI-gestützte Simulation auf Basis der Persona Sarah. Es ist kein Interview mit einer realen Person und liefert keine validierten Nutzererkenntnisse. Es dient ausschließlich dazu, den Leitfaden zu testen, Hypothesen zu schärfen und echte Interviews vorzubereiten.
+
+### Forschungsziele
+
+1. Verstehen, wie Fahrzeughalter heute auf Warnleuchten und unbekannte Fahrzeugprobleme reagieren.
+2. Ermitteln, welche Informationen in einer stressigen Situation wirklich benötigt werden.
+3. Vertrauen und Vorbehalte gegenüber OBD-II-Adaptern und KI-Erklärungen untersuchen.
+4. Herausfinden, wie Dringlichkeit und Unsicherheit verständlich dargestellt werden sollten.
+5. Anforderungen an Diagnosebericht, Datenschutz und Weitergabe an Werkstätten erfassen.
+6. Prüfen, ob AutoScan AI ein reales Problem löst, bevor einzelne Funktionen bewertet werden.
+
+### Forschungsfragen
+
+- Was tun Nutzer heute, wenn eine Warnleuchte erscheint?
+- Welche Unsicherheiten, Kosten und Zeitverluste entstehen dabei?
+- Wann vertrauen Nutzer einer digitalen Diagnose?
+- Welche Aussagen könnten gefährliche oder falsche Sicherheit erzeugen?
+- Welche Daten möchten Nutzer speichern oder teilen?
+- Welche Funktionen sind für den ersten MVP unverzichtbar?
+- Welche Gründe könnten zur Ablehnung oder zum Abbruch führen?
+
+### Zielgruppe und Rekrutierung
+
+**Primäre Zielgruppe**
+
+- private Fahrzeughalter,
+- geringe bis mittlere Kfz-Kenntnisse,
+- regelmäßige Smartphone-Nutzung,
+- mindestens eine Erfahrung mit Warnleuchte, Panne oder unklarem Fahrzeugproblem.
+
+**Empfohlene Stichprobe für die erste Runde**
+
+- 5–7 Interviews mit privaten Fahrzeughaltern,
+- mindestens zwei Personen mit sehr geringen Kfz-Kenntnissen,
+- unterschiedliche Altersgruppen und Fahrzeugtypen,
+- möglichst unterschiedliche Erfahrungen mit Werkstätten und Diagnose-Apps.
+
+**Ausschluss für diese erste Runde**
+
+- professionelle Kfz-Mechaniker als einzige Stichprobe,
+- Personen ohne eigene oder regelmäßige Fahrzeugnutzung,
+- Teammitglieder, die das Konzept bereits vollständig kennen.
+
+### Rahmenbedingungen
+
+| Punkt | Vorgabe |
+|---|---|
+| Dauer | 30–45 Minuten |
+| Format | persönlich oder Videoanruf |
+| Rollen | eine moderierende, optional eine protokollierende Person |
+| Aufzeichnung | nur nach ausdrücklicher Einwilligung |
+| Daten | so wenig personenbezogene Daten wie möglich |
+| Material | Leitfaden, Notizen, optional neutrale Wireframes |
+| Vergütung | vorab transparent kommunizieren |
+| Auswertung | Aussagen pseudonymisieren und thematisch codieren |
+
+## Interviewleitfaden
+
+### 1. Begrüßung und Einwilligung – ca. 3 Minuten
+
+**Moderationstext**
+
+> Vielen Dank, dass Sie sich Zeit nehmen. Wir möchten verstehen, wie Menschen mit Fahrzeugproblemen und Warnleuchten umgehen. Wir testen heute nicht Sie, sondern unsere Annahmen. Es gibt keine richtigen oder falschen Antworten. Bitte erzählen Sie möglichst konkrete Erfahrungen.  
+>  
+> Das Gespräch dauert ungefähr 30 bis 45 Minuten. Ihre Angaben werden nur für die Produktentwicklung verwendet und in der Auswertung nicht mit Ihrem Namen verbunden. Dürfen wir Notizen machen? Dürfen wir das Gespräch für die spätere Auswertung aufzeichnen?
+
+**Prüfpunkte**
+
+- [ ] Zweck erklärt
+- [ ] Freiwilligkeit erklärt
+- [ ] Zustimmung zu Notizen eingeholt
+- [ ] Separate Zustimmung zur Aufzeichnung eingeholt
+- [ ] Möglichkeit zum Abbruch erklärt
+- [ ] Keine unnötigen personenbezogenen Daten erhoben
+
+### 2. Aufwärmen und Kontext – ca. 5 Minuten
+
+1. Erzählen Sie bitte kurz, wie Sie Ihr Fahrzeug im Alltag nutzen.
+2. Wie würden Sie Ihre eigenen Fahrzeugkenntnisse beschreiben?
+3. Welche Aufgaben am Fahrzeug erledigen Sie selbst?
+4. Wann war Ihr letzter Werkstattbesuch und was war der Anlass?
+5. Welche Apps oder digitalen Dienste verwenden Sie rund um Ihr Fahrzeug?
+
+**Mögliche Nachfragen**
+
+- Können Sie mir ein konkretes Beispiel geben?
+- Wie häufig kommt das vor?
+- Was war daran besonders einfach oder schwierig?
+
+### 3. Letzte reale Problemsituation – ca. 10 Minuten
+
+1. Denken Sie bitte an das letzte Mal, als eine Warnleuchte erschien oder sich das Fahrzeug ungewöhnlich verhielt. Was ist passiert?
+2. Was haben Sie als Erstes getan?
+3. Welche Informationen hatten Sie in diesem Moment?
+4. Wo haben Sie nach Hilfe gesucht?
+5. Wie haben Sie entschieden, ob Sie weiterfahren?
+6. Was hat Ihnen dabei am meisten Sorgen gemacht?
+7. Wie viel Zeit und gegebenenfalls Geld hat die Klärung gekostet?
+8. Was hätte Ihnen in dieser Situation am meisten geholfen?
+
+**Nicht fragen**
+
+- „Wäre eine KI-Diagnose nicht hilfreich gewesen?“
+- „Finden Sie unsere Idee gut?“
+- „Würden Sie diese Funktion benutzen?“
+
+Diese Fragen wären suggestiv und würden eher Zustimmung als tatsächliches Verhalten messen.
+
+### 4. Bestehende Lösungen und Alternativen – ca. 5 Minuten
+
+1. Welche Webseiten, Apps, Personen oder Werkstätten haben Sie genutzt?
+2. Was hat dabei gut funktioniert?
+3. Was hat nicht funktioniert?
+4. Haben Sie bereits einen OBD-II-Adapter oder eine Diagnose-App verwendet?
+5. Falls ja: Was war verständlich und was war unklar?
+6. Falls nein: Was hat Sie bisher davon abgehalten?
+
+### 5. Vertrauen, Sicherheit und KI – ca. 7 Minuten
+
+1. Woran erkennen Sie, ob eine digitale Diagnose vertrauenswürdig ist?
+2. Welche Informationen müssten sichtbar sein, damit Sie eine Erklärung nachvollziehen können?
+3. Was dürfte eine App auf keinen Fall behaupten?
+4. Wie sollte die App Unsicherheit darstellen?
+5. Wann würden Sie trotz einer App eine Werkstatt oder Pannenhilfe kontaktieren?
+6. Wie stehen Sie dazu, wenn eine KI technische Fehlercodes in Alltagssprache erklärt?
+7. Welche Rolle sollten geprüfte Datenquellen und menschliche Fachleute spielen?
+
+### 6. Konzepttest AutoScan AI – ca. 7 Minuten
+
+Erst jetzt wird das Konzept neutral vorgestellt:
+
+> AutoScan AI ist eine geplante mobile Anwendung. Sie verbindet sich mit einem unterstützten OBD-II-Adapter, liest standardisierte Fehlercodes ausschließlich lesend aus und erklärt deren Bedeutung, mögliche Ursachen, Unsicherheiten und nächste Schritte. Die Anwendung ersetzt keine Werkstattdiagnose und verändert keine Fahrzeugdaten.
+
+Fragen:
+
+1. Was verstehen Sie unter diesem Konzept?
+2. Welcher Teil wäre für Sie am nützlichsten?
+3. Was wäre unklar oder besorgniserregend?
+4. In welcher Situation würden Sie die Anwendung verwenden?
+5. Welche Information müsste zuerst auf dem Ergebnisbildschirm stehen?
+6. Welche Funktion wäre für eine erste Version unverzichtbar?
+7. Was könnte Sie davon abhalten, die Anwendung zu nutzen?
+8. Welcher Preis oder welches Geschäftsmodell wäre nachvollziehbar? Warum?
+
+### 7. Bericht und Datenschutz – ca. 4 Minuten
+
+1. Würden Sie Diagnoseberichte speichern? Wofür?
+2. Mit wem würden Sie einen Bericht teilen?
+3. Welche Daten sollten nicht automatisch im Bericht stehen?
+4. Möchten Sie Berichte eher lokal auf dem Gerät oder in einem Konto speichern?
+5. Welche Kontrolle über Löschen und Export erwarten Sie?
+
+### 8. Abschluss – ca. 2 Minuten
+
+1. Wenn Sie eine Sache an der Idee ändern könnten, welche wäre das?
+2. Was haben wir nicht gefragt, das für Sie wichtig ist?
+3. Dürfen wir Sie für einen späteren Prototypentest erneut kontaktieren?
+
+**Moderationstext**
+
+> Vielen Dank. Ihre Antworten helfen uns, das Problem besser zu verstehen. Wir werten die Aussagen gemeinsam mit weiteren Interviews aus und verwenden einzelne Aussagen nur anonymisiert beziehungsweise pseudonymisiert.
+
+## Simuliertes KI-Interview
+
+### Interviewprofil
+
+| Merkmal | Wert |
+|---|---|
+| Interviewtyp | KI-gestützte Simulation |
+| Persona | Sarah, sicherheitsbewusste Fahrzeughalterin |
+| Alter | 34 Jahre |
+| Fahrzeugwissen | gering |
+| Dauer der Simulation | ungefähr 20 Minuten |
+| Zweck | Leitfaden testen und Hypothesen vorbereiten |
+| Evidenzstatus | synthetisch, nicht validierend |
+
+### Auszug aus dem Interview
+
+**Interviewer:** Erzählen Sie bitte kurz, wie Sie Ihr Fahrzeug im Alltag nutzen.
+
+**Sarah (KI-Simulation):** Ich fahre damit zur Arbeit, erledige Einkäufe und besuche am Wochenende meine Familie. Im Durchschnitt nutze ich das Auto fast täglich. Technisch kenne ich mich kaum aus. Ich weiß, wie man Öl oder Scheibenwaschwasser kontrolliert, aber bei Warnleuchten werde ich schnell unsicher.
+
+**Interviewer:** Denken Sie bitte an das letzte Mal, als eine Warnleuchte erschien. Was ist passiert?
+
+**Sarah:** Vor einer längeren Fahrt ging am Abend die Motorkontrollleuchte an. Das Auto fuhr zunächst normal. Ich wusste nicht, ob ich am nächsten Morgen noch fahren durfte oder ob ich etwas kaputt machen würde.
+
+**Interviewer:** Was haben Sie als Erstes getan?
+
+**Sarah:** Ich habe das Fahrzeughandbuch gesucht und danach im Internet recherchiert. Dort stand alles Mögliche – von „nicht schlimm“ bis „sofort stehen lassen“. Danach war ich eher unsicherer.
+
+**Interviewer:** Wie haben Sie schließlich entschieden?
+
+**Sarah:** Ich habe die Fahrt verschoben und am nächsten Morgen bei einer Werkstatt angerufen. Einen kurzfristigen Termin gab es nicht. Später stellte sich heraus, dass es nicht sofort gefährlich war, aber das konnte ich vorher nicht wissen.
+
+**Interviewer:** Was hat Ihnen in dieser Situation am meisten gefehlt?
+
+**Sarah:** Eine verständliche erste Einschätzung. Nicht unbedingt eine endgültige Diagnose, sondern eine klare Antwort darauf, wie dringend es ist und was ich jetzt tun soll.
+
+**Interviewer:** Haben Sie schon einmal einen OBD-II-Adapter benutzt?
+
+**Sarah:** Nein. Ich kenne solche Geräte nur aus Videos. Ich hätte Sorge, etwas falsch anzuschließen oder Daten im Auto zu verändern.
+
+**Interviewer:** Was müsste die App zeigen, um diese Sorge zu reduzieren?
+
+**Sarah:** Eine einfache Anleitung mit Bildern und sehr deutlich, dass nur Daten gelesen und nichts verändert wird. Außerdem müsste ich erkennen können, ob der Adapter mit meinem Auto funktioniert.
+
+**Interviewer:** Woran würden Sie eine vertrauenswürdige Diagnose erkennen?
+
+**Sarah:** Wenn die App erklärt, woher die Information kommt, nicht so tut, als wäre alles hundertprozentig sicher, und im Zweifel eine Werkstatt empfiehlt. Eine Ampel allein wäre mir zu wenig. Ich möchte eine kurze Begründung.
+
+**Interviewer:** Was dürfte eine App auf keinen Fall behaupten?
+
+**Sarah:** Sie sollte niemals einfach sagen: „Sie können sicher weiterfahren“, wenn sie das nicht wirklich wissen kann. Auch konkrete Reparaturkosten ohne Grundlage fände ich unseriös.
+
+**Interviewer:** Wie stehen Sie dazu, dass KI den Fehlercode erklärt?
+
+**Sarah:** Grundsätzlich positiv, wenn klar ist, dass die KI nur erklärt und keine sichere Diagnose stellt. Ich möchte technische Informationen verständlich haben, aber keine erfundene Sicherheit.
+
+**Interviewer:** AutoScan AI liest Fehlercodes ausschließlich lesend aus, erklärt mögliche Ursachen, Unsicherheit und nächste Schritte. Was wäre daran für Sie am nützlichsten?
+
+**Sarah:** Die Kombination aus verständlicher Erklärung und Dringlichkeit. Danach wäre ein Bericht hilfreich, den ich direkt an die Werkstatt schicken kann.
+
+**Interviewer:** Welche Information müsste auf dem Ergebnisbildschirm zuerst stehen?
+
+**Sarah:** Zuerst die Dringlichkeit und was ich unmittelbar tun soll. Danach die einfache Erklärung. Technische Details könnten weiter unten stehen.
+
+**Interviewer:** Was könnte Sie von der Nutzung abhalten?
+
+**Sarah:** Ein komplizierter Verbindungsprozess, ein unbekannter Adapter, zu viele Fachbegriffe, ein teures Abo oder wenn ich nicht weiß, was mit meinen Fahrzeugdaten passiert.
+
+**Interviewer:** Würden Sie einen Diagnosebericht speichern?
+
+**Sarah:** Ja, aber am liebsten zunächst nur auf meinem Smartphone. Ich würde selbst auswählen wollen, ob Fahrzeugnummer oder andere persönliche Daten enthalten sind.
+
+**Interviewer:** Wenn Sie eine Sache an der Idee ändern könnten, welche wäre das?
+
+**Sarah:** Ich würde einen sehr einfachen Notfall- oder Schnellmodus anbieten: verbinden, scannen und sofort sehen, was ich als Nächstes tun soll.
+
+### Erste Beobachtungen aus der Simulation
+
+| Beobachtung | Mögliche Interpretation | Evidenzstatus |
+|---|---|---|
+| Internetrecherche erhöht die Unsicherheit | Widersprüchliche Informationen sind ein relevantes Problem | Hypothese |
+| Dringlichkeit ist wichtiger als technische Tiefe | Ergebnisansicht sollte Handlung und Risiko priorisieren | Hypothese |
+| Nutzer fürchten Veränderungen am Fahrzeug | „Nur lesen“ muss technisch garantiert und sichtbar erklärt werden | Hypothese |
+| Ampelfarbe allein reicht nicht | Risikostufe benötigt Text und kurze Begründung | Hypothese |
+| Bericht wird für Werkstattkommunikation gewünscht | Export kann einen praktischen Folgeschritt unterstützen | Hypothese |
+| Lokale Speicherung wird bevorzugt | Privacy-by-Default kann Vertrauen erhöhen | Hypothese |
+| Komplizierte Verbindung ist ein Abbruchrisiko | Onboarding und Kompatibilitätsprüfung sind kritisch | Hypothese |
+| Schnellmodus wirkt attraktiv | Geführter Kernablauf sollte kurz und stressfest sein | Hypothese |
+
+### Abgeleitete Produkt-Hypothesen
+
+| ID | Hypothese | Validierung im echten Interview |
+|---|---|---|
+| H-01 | Nutzer priorisieren Dringlichkeit vor technischer Erklärung | Rangfolge der gewünschten Ergebnisinformationen erfragen |
+| H-02 | Sichtbarer Nur-Lese-Zugriff erhöht Vertrauen | Reaktion auf zwei Onboarding-Varianten testen |
+| H-03 | Eine Begründung ist wichtiger als eine reine Ampelfarbe | Ergebnisvarianten vergleichen lassen |
+| H-04 | Lokale Speicherung wird gegenüber Cloud bevorzugt | Tatsächliche Präferenz und Gründe explorieren |
+| H-05 | Berichtsexport ist für Werkstattgespräche wertvoll | Nach bisherigen Kommunikationswegen fragen |
+| H-06 | Adapterkompatibilität ist ein entscheidender Einstiegspunkt | Erfahrungen und Abbruchgründe untersuchen |
+| H-07 | Ein Schnellmodus hilft in Stresssituationen | Prototypische Journey testen |
+
+### Anpassungen am Interviewleitfaden nach dem Probelauf
+
+- Nach einer konkreten letzten Problemsituation fragen, bevor AutoScan AI vorgestellt wird.
+- „Weiterfahren“ nicht binär oder suggestiv formulieren.
+- Vertrauen getrennt für Adapter, technische Daten und KI-Erklärung untersuchen.
+- Ergebnisinformationen von Interviewten priorisieren lassen.
+- Lokale Speicherung und Cloud-Speicherung getrennt besprechen.
+- Preisfrage erst nach Problem-, Lösungs- und Vertrauensfragen stellen.
+- In echten Interviews Pausen zulassen und nicht jede Antwort sofort interpretieren.
+
+### Research-Risiken und Gegenmaßnahmen
+
+| Risiko | Gegenmaßnahme |
+|---|---|
+| KI bestätigt bestehende Projektannahmen | Simulation nur zur Vorbereitung verwenden |
+| Suggestive Fragen erzeugen Zustimmung | Verhalten und konkrete Vergangenheit erfragen |
+| Eine Persona wird als gesamte Zielgruppe behandelt | Unterschiedliche reale Teilnehmer rekrutieren |
+| Aussagen werden ohne Kontext zusammengefasst | Audio/Notizen mit Einwilligung, Zitate und Kontext dokumentieren |
+| Datenschutz bei Aufzeichnungen | Separate Einwilligung, Zugriffsbeschränkung und Löschfrist |
+| Team bewertet Einzelmeinungen als Beweis | Muster erst über mehrere Interviews ableiten |
+
+**Ergebnisse**
+
+- Wiederverwendbarer Interviewleitfaden für 30–45 Minuten erstellt
+- Forschungsziele, Zielgruppe und Rekrutierungskriterien definiert
+- Einwilligungs- und Datenschutzschritte integriert
+- Leitfaden durch ein simuliertes Interview mit Persona Sarah erprobt
+- Sieben überprüfbare Produkthypothesen abgeleitet
+- Grenzen synthetischer Nutzerforschung ausdrücklich dokumentiert
+
+**Entscheidungen**
+
+| Entscheidung | Begründung | Verantwortlich |
+|---|---|---|
+| Problem-Interview vor Konzepttest | Verhindert, dass die Produktidee Antworten zu früh beeinflusst | Product/UX |
+| Simulation wird nicht als Validierung gewertet | KI kann reale Erfahrung nicht ersetzen | Research Lead |
+| Letztes reales Verhalten steht im Mittelpunkt | Konkretes Verhalten ist belastbarer als hypothetische Zustimmung | Product/UX |
+| Aufzeichnung benötigt separate Einwilligung | Datenschutz und freiwillige Teilnahme | Privacy/Research |
+| Sarah wird für den ersten Probelauf gewählt | Sie entspricht dem primären MVP-Fokus | Product Owner |
+
+**Offene Punkte**
+
+- [ ] 5–7 reale Interviewteilnehmer rekrutieren
+- [ ] Informationsblatt und Einwilligungstext finalisieren
+- [ ] Löschfrist und Speicherort für Aufzeichnungen bestimmen
+- [ ] Notiz- und Auswertungsvorlage erstellen
+- [ ] Interviewleitfaden mit einer realen Person pilotieren
+- [ ] Ergebnisse nach mehreren Interviews thematisch clustern
+- [ ] Hypothesen H-01 bis H-07 validieren oder verwerfen
+
+**Nächste Schritte**
+
+- [ ] Erstes echtes Interview terminieren
+- [ ] Erkenntnisse in einer Research Repository Tabelle erfassen
+- [ ] Wireframe für Ergebnispriorisierung erstellen
+- [ ] Schnellmodus als einfachen Ablauf skizzieren
+- [ ] Nach fünf Interviews eine gemeinsame Synthese durchführen
+
+---
+
 ## 2026-08-29 – Projektidee und Projektgrundlage definieren
 
 **Prompt**
