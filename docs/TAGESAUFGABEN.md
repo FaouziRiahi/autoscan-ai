@@ -1334,6 +1334,69 @@ Den bereits bestehenden AutoScan-AI-Prototyp nachträglich als Low-Fidelity-Wire
 
 ---
 
+## 2026-08-18 – Akzeptanzkriterien-Audit des wichtigsten Nutzerflusses
+
+**Prompt**
+
+> Nutzt euren Wireframes als Ausgangspunkt oder startet mit User Story & Akzeptanzkriterien. Entwickelt den wichtigsten Nutzerfluss als klickbaren Prototyp. Prüft, ob eure Akzeptanzkriterien erfüllt sind. Dokumentiert offene Punkte und notwendige Iterationen.
+
+**Tagesziel**
+
+Prüfen, ob der bereits bestehende klickbare Prototyp (Diagnose-Flow) die am 2026-08-11 definierten Akzeptanzkriterien tatsächlich erfüllt, und daraus notwendige Iterationen ableiten.
+
+**Aufgaben**
+
+- [x] Wichtigsten Nutzerfluss identifizieren (US-01, US-02, US-03, US-04, US-06)
+- [x] Jedes Akzeptanzkriterium gegen den tatsächlichen Code geprüft, nicht nur behauptet
+- [x] Offene Punkte und notwendige Iterationen dokumentiert
+
+**Ergebnisse**
+
+- Der wichtigste Nutzerfluss (Adapter verbinden → Scan → Fehlercode verstehen → Dringlichkeit erkennen → nächste Schritte) existierte bereits als klickbarer Prototyp im Diagnose-Tab.
+- Audit von 20 Akzeptanzkriterien aus US-01, US-02, US-03, US-04 und US-06: 8 erfüllt, 4 teilweise, 8 nicht erfüllt.
+- Vollständiges Audit mit Einzelbewertung je Kriterium: [`docs/assets/wireframes/acceptance-audit.png`](assets/wireframes/acceptance-audit.png)
+
+**Wichtigster Befund**
+
+Der Prototyp beantwortet eine andere Frage als die User Stories stellen: US-01 bis US-06 (2026-08-11) sind für einen Fahrzeughalter geschrieben, der entscheiden will, ob er sicher weiterfahren kann. Der gebaute Prototyp beantwortet stattdessen die Frage eines Käufers: „Soll ich dieses Auto kaufen, und wie viel Nachlass verlange ich?" Das erklärt, warum US-06 strukturell scheitert — es ist keine fehlende Funktion, sondern eine andere Zielsetzung. Beide Zielgruppen sind in der Projektidee (2026-08-29) genannt, aber nur eine wurde gebaut.
+
+**Entscheidungen**
+
+| Entscheidung | Begründung | Verantwortlich |
+|---|---|---|
+| Audit gegen den tatsächlichen Code statt gegen Selbstauskunft | Nur eine Codeprüfung deckt reale Lücken auf, z. B. den fehlenden Werkstattdiagnose-Disclaimer | Technical Lead |
+
+**Chancen und Risiken**
+
+| Typ | Beschreibung | Maßnahme |
+|---|---|---|
+| Chance | Frühe Aufdeckung des Rollenkonflikts Käufer vs. Fahrzeughalter spart spätere Rework-Kosten | Grundsatzentscheidung priorisieren |
+| Risiko | Fehlender Werkstattdiagnose-Disclaimer ist ein Haftungsrisiko | Vor weiterem Funktionsausbau ergänzen |
+
+**Governance und Compliance**
+
+- Datenschutz: nicht betroffen
+- Informationssicherheit: nicht betroffen
+- Rechtliche Prüfung: Disclaimer-Lücke (Haftung) identifiziert, noch offen
+- Freigaben: keine
+- Dokumentationspflichten: Audit-Ergebnis versioniert unter `docs/assets/wireframes/`
+
+**Offene Punkte**
+
+- [ ] Entscheiden: Käufer- oder Fahrzeughalter-Flow zuerst? (Must-have)
+- [ ] Rechtlichen Disclaimer ergänzen, dass die App keine Werkstattdiagnose ersetzt (Must-have)
+- [ ] Abbrechen-Möglichkeit während des laufenden Scans einbauen (Must-have)
+- [ ] Verbindungsstatus- und Fehleranzeige für den OBD2-Pfad ergänzen (Should-have)
+- [ ] Sicherheits-Handlungsstufen (Beobachten/zeitnah prüfen/sofort anhalten) einführen, falls der Fahrzeughalter-Flow priorisiert wird (Should-have)
+
+**Nächste Schritte**
+
+- [ ] Grundsatzentscheidung Käufer- vs. Fahrzeughalter-Flow treffen und dokumentieren
+- [ ] Disclaimer-Text formulieren und in alle relevanten Screens einbauen
+- [ ] Abbrechen-Button für den Scan-Screen umsetzen
+
+---
+
 ## 2026-08-29 – Projektidee und Projektgrundlage definieren
 
 **Prompt**
