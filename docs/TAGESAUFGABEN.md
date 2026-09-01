@@ -1278,6 +1278,62 @@ Eine aus Interviewfeedback abgeleitete Funktion gilt erst als ausreichend bearbe
 
 ---
 
+## 2026-08-17 – Low-Fidelity- und High-Fidelity-Screens dokumentiert
+
+**Prompt**
+
+> Tagesaufgabe ist Erstelle Wireframes für dein Projekt oder beginne direkt mit dem Bau Deines Prototypen. (Anschließend: „jetzt mit high Fidelity" und „diese Zusammenfassung und Wireframes in github in die Branch Dokumentation hinzufügen".)
+
+**Tagesziel**
+
+Den bereits bestehenden AutoScan-AI-Prototyp nachträglich als Low-Fidelity-Wireframes und High-Fidelity-Screens dokumentieren, damit die heutige Tagesaufgabe im Projektverlauf nachvollziehbar bleibt.
+
+**Aufgaben**
+
+- [x] Low-Fidelity-Wireframes des Kernflows erstellen
+- [x] High-Fidelity-Screens aus dem laufenden Prototyp exportieren
+- [x] Ergebnisse in der Projektdokumentation ablegen
+
+**Ergebnisse**
+
+- Low-Fidelity-Wireframes (Graustufen, 6 Screens: Start, Fahrzeug wählen, Scan läuft, Ergebnis, Garage, Fahrzeug hinzufügen): [`docs/assets/wireframes/autoscan-wireframes.png`](assets/wireframes/autoscan-wireframes.png)
+- High-Fidelity-Screens (reale Screenshots aus dem laufenden Prototyp, gleiche 6 Screens im gleichen Layout): [`docs/assets/wireframes/autoscan-hifi-board.png`](assets/wireframes/autoscan-hifi-board.png)
+
+**Entscheidungen**
+
+| Entscheidung | Begründung | Verantwortlich |
+|---|---|---|
+| Wireframes wurden nach dem Prototyp erstellt, nicht davor | Der Prototyp existierte bereits; Wireframes dienen hier als Dokumentation für den Tagesaufgaben-Prozess, nicht als Planungswerkzeug | Product Owner |
+| High-Fidelity-Screens als echte Screenshots statt handgebauter Mockups | Höhere Genauigkeit, schneller, da der Prototyp bereits läuft | Technical Lead |
+| Beide Sätze im identischen 6-Screen-Layout | Direkter 1:1-Vergleich Low-Fi vs. High-Fi im selben Board möglich | Technical Lead |
+
+**Chancen und Risiken**
+
+| Typ | Beschreibung | Maßnahme |
+|---|---|---|
+| Chance | Vergleich Low-Fi/High-Fi erleichtert Reviewer:innen die Nachvollziehbarkeit des Vorgehens | Beide Bilder im selben Abschnitt verlinken |
+| Risiko | Reihenfolge (Prototyp vor Wireframes) könnte als abweichend vom klassischen UX-Prozess missverstanden werden | Entscheidung oben explizit begründet |
+
+**Governance und Compliance**
+
+- Datenschutz: Screens zeigen ausschließlich Demo-/Beispieldaten (Testfahrzeuge, keine echten Personendaten)
+- Informationssicherheit: keine Zugangsdaten oder Secrets in den Screens sichtbar
+- Rechtliche Prüfung: nicht erforderlich für diesen Dokumentationsschritt
+- Freigaben: keine
+- Dokumentationspflichten: Bilder liegen versioniert unter `docs/assets/wireframes/`
+
+**Offene Punkte**
+
+- [ ] Wireframes/High-Fidelity-Screens für verbleibende Nebenbereiche (Berichte, Mehr/News) ergänzen
+- [ ] Usability-Test der High-Fidelity-Screens mit Personen aus dem Interviewleitfaden (2026-08-13) durchführen
+
+**Nächste Schritte**
+
+- [ ] Feedback aus einem Usability-Test in die Screens einarbeiten
+- [ ] Entscheidung dokumentieren, ob Low-Fidelity-Wireframes künftig vor neuen Features erstellt werden
+
+---
+
 ## 2026-08-29 – Projektidee und Projektgrundlage definieren
 
 **Prompt**
@@ -1461,59 +1517,3 @@ Zu prüfen und zu dokumentieren:
 - [ ] Entwicklungsumgebung und CI einrichten
 - [ ] OBD-II-Verbindung mit Simulator oder Testadapter prototypisch validieren
 - [ ] Datenschutz- und Risikoregister als eigene Dokumente anlegen
-
----
-
-## 2026-08-31 – Low-Fidelity- und High-Fidelity-Screens dokumentiert
-
-**Prompt**
-
-> Tagesaufgabe ist Erstelle Wireframes für dein Projekt oder beginne direkt mit dem Bau Deines Prototypen. (Anschließend: „jetzt mit high Fidelity" und „diese Zusammenfassung und Wireframes in github in die Branch Dokumentation hinzufügen".)
-
-**Tagesziel**
-
-Den bereits bestehenden AutoScan-AI-Prototyp nachträglich als Low-Fidelity-Wireframes und High-Fidelity-Screens dokumentieren, damit die heutige Tagesaufgabe im Projektverlauf nachvollziehbar bleibt.
-
-**Aufgaben**
-
-- [x] Low-Fidelity-Wireframes des Kernflows erstellen
-- [x] High-Fidelity-Screens aus dem laufenden Prototyp exportieren
-- [x] Ergebnisse in der Projektdokumentation ablegen
-
-**Ergebnisse**
-
-- Low-Fidelity-Wireframes (Graustufen, 6 Screens: Start, Fahrzeug wählen, Scan läuft, Ergebnis, Garage, Fahrzeug hinzufügen): [`docs/assets/wireframes/autoscan-wireframes.png`](assets/wireframes/autoscan-wireframes.png)
-- High-Fidelity-Screens (reale Screenshots aus dem laufenden Prototyp, gleiche 6 Screens im gleichen Layout): [`docs/assets/wireframes/autoscan-hifi-board.png`](assets/wireframes/autoscan-hifi-board.png)
-
-**Entscheidungen**
-
-| Entscheidung | Begründung | Verantwortlich |
-|---|---|---|
-| Wireframes wurden nach dem Prototyp erstellt, nicht davor | Der Prototyp existierte bereits; Wireframes dienen hier als Dokumentation für den Tagesaufgaben-Prozess, nicht als Planungswerkzeug | Product Owner |
-| High-Fidelity-Screens als echte Screenshots statt handgebauter Mockups | Höhere Genauigkeit, schneller, da der Prototyp bereits läuft | Technical Lead |
-| Beide Sätze im identischen 6-Screen-Layout | Direkter 1:1-Vergleich Low-Fi vs. High-Fi im selben Board möglich | Technical Lead |
-
-**Chancen und Risiken**
-
-| Typ | Beschreibung | Maßnahme |
-|---|---|---|
-| Chance | Vergleich Low-Fi/High-Fi erleichtert Reviewer:innen die Nachvollziehbarkeit des Vorgehens | Beide Bilder im selben Abschnitt verlinken |
-| Risiko | Reihenfolge (Prototyp vor Wireframes) könnte als abweichend vom klassischen UX-Prozess missverstanden werden | Entscheidung oben explizit begründet |
-
-**Governance und Compliance**
-
-- Datenschutz: Screens zeigen ausschließlich Demo-/Beispieldaten (Testfahrzeuge, keine echten Personendaten)
-- Informationssicherheit: keine Zugangsdaten oder Secrets in den Screens sichtbar
-- Rechtliche Prüfung: nicht erforderlich für diesen Dokumentationsschritt
-- Freigaben: keine
-- Dokumentationspflichten: Bilder liegen versioniert unter `docs/assets/wireframes/`
-
-**Offene Punkte**
-
-- [ ] Wireframes/High-Fidelity-Screens für verbleibende Nebenbereiche (Berichte, Mehr/News) ergänzen
-- [ ] Usability-Test der High-Fidelity-Screens mit Personen aus dem Interviewleitfaden (2026-08-13) durchführen
-
-**Nächste Schritte**
-
-- [ ] Feedback aus einem Usability-Test in die Screens einarbeiten
-- [ ] Entscheidung dokumentieren, ob Low-Fidelity-Wireframes künftig vor neuen Features erstellt werden
