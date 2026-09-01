@@ -1745,3 +1745,65 @@ Zu prüfen und zu dokumentieren:
 - [ ] Entwicklungsumgebung und CI einrichten
 - [ ] OBD-II-Verbindung mit Simulator oder Testadapter prototypisch validieren
 - [ ] Datenschutz- und Risikoregister als eigene Dokumente anlegen
+
+---
+
+## 2026-09-01 – Bilder für Prototyp und Präsentation erstellen
+
+**Prompt**
+
+> Erstellt und überarbeitet Bilder für euren Prototypen und eure Präsentation.
+
+**Tagesziel**
+
+Ein zusammenhängendes visuelles Bildpaket für den AutoScan-AI-Prototypen und die Projektpräsentation erstellen. Die Bilder sollen die zentralen Anwendungsschritte verständlich darstellen und eine konsistente Automotive-Tech-Ästhetik verwenden.
+
+### Gestaltungsrichtung
+
+- dunkelblaue, vertrauenswürdige Automotive-Tech-Optik
+- elektrische Blautöne für Diagnose und Verbindung
+- dezente grüne Akzente für erfolgreiche Prüfungen
+- zurückhaltendes Amber für Warnungen
+- keine eingebetteten Überschriften oder Logos
+- flexible Nutzung in Prototyp, Figma und Präsentation
+
+### Erstellte Bildassets
+
+| Asset | Verwendungszweck | Datei |
+|---|---|---|
+| OBD-II-Verbindung | Onboarding und Verbindungsbildschirm | [PNG](assets/prototype/autoscan-obd-connection.png) |
+| Fahrzeugscan | Scanfortschritt und Diagnoseprozess | [PNG](assets/prototype/autoscan-vehicle-scan.png) |
+| Diagnoseergebnis | Fehlererklärung und Sicherheitsbewertung | [PNG](assets/prototype/autoscan-diagnosis-result.png) |
+| Präsentations-Cover | Titel- und Einleitungsfolie | [PNG](assets/presentation/autoscan-presentation-cover.png) |
+
+### Einsatz im Prototypen
+
+- **Verbindung:** OBD-II-Adapter und Smartphone erklären den Einstieg visuell.
+- **Scan:** Das Fahrzeug mit Diagnoseeffekten unterstützt die Fortschrittsanzeige.
+- **Ergebnis:** Motor, Zündkerze und Sicherheitssymbol visualisieren technische Diagnose und geprüfte Hinweise.
+- **Präsentation:** Smartphone, Fahrzeug und Adapter vermitteln die Produktidee auf einen Blick.
+
+### Qualitäts- und Sicherheitsregeln
+
+- Bilder ersetzen keine fachliche Diagnoseinformation.
+- Warnfarben werden zurückhaltend und nicht irreführend eingesetzt.
+- Kritische Aussagen bleiben als editierbarer Text außerhalb des Bildes.
+- Fahrzeug- und Gerätemarken werden nicht dargestellt.
+- Bildassets werden getrennt von Sicherheitslogik und Messdaten verwaltet.
+
+### Ergebnisse
+
+- [x] Vier visuell zusammengehörige Bilder erstellt
+- [x] Bilddateien eindeutig benannt
+- [x] Assets für Prototyp und Präsentation getrennt zugeordnet
+- [x] Keine Texte fest in die Bilder eingebaut
+- [x] Bilder im Repository versioniert
+
+### Nächste Schritte
+
+- [ ] Assets in die Wireframes einsetzen
+- [ ] Darstellung auf kleinen Smartphone-Bildschirmen testen
+- [ ] Präsentations-Cover mit editierbarem Titel ergänzen
+- [ ] Kontrast und Lesbarkeit der darüberliegenden Texte prüfen
+- [ ] Bildgrößen für App-Build und Präsentation optimieren
+
