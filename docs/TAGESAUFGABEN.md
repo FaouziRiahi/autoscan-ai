@@ -1457,6 +1457,111 @@ Den ersten Compliance Review (12.08.) gegen den mittlerweile tatsächlich gebaut
 
 ---
 
+## 2026-08-20 – Usability-Test mit dem Prototypen
+
+**Prompt**
+
+> Führt mit eurem Buddy einen Usability-Test mit dem Prototypen durch.
+
+**Tagesziel**
+
+Den zentralen AutoScan-AI-Ablauf **Verbinden → Scannen → Handeln** auf Verständlichkeit, Vertrauen, Fehleranfälligkeit und sichere Entscheidungsunterstützung prüfen.
+
+> **Evidenzhinweis:** Der Test wurde als KI-Buddy-Simulation durchgeführt. Die Ergebnisse dienen der Prototypverbesserung, ersetzen jedoch keinen Test mit einer realen Person.
+
+### Testaufbau
+
+| Merkmal | Beschreibung |
+|---|---|
+| Methode | Moderierter Usability-Test mit Think-Aloud |
+| Testperson | Simulierter KI-Buddy |
+| Profil | Private Fahrzeughalterin mit geringen Kfz-Kenntnissen |
+| Szenario | Motorkontrollleuchte vor einer längeren Fahrt |
+| Prototyp | MVP-Wireframes: Verbinden, Scannen, Ergebnis/Handeln |
+| Getestete Aufgaben | 7 |
+
+### Ergebnisübersicht
+
+| Kennzahl | Ergebnis |
+|---|---:|
+| Vollständig gelöste Aufgaben | 5 von 7 |
+| Teilweise gelöste Aufgaben | 2 von 7 |
+| Gescheiterte Aufgaben | 0 |
+| Kritische Probleme | 1 |
+| Erhebliche Probleme | 3 |
+| Benötigte Hilfestellungen | 1 |
+
+### Was gut funktioniert
+
+- Der sichtbare Nur-Lese-Modus schafft Vertrauen.
+- Die primären Aktionen werden schnell erkannt.
+- Der Scanfortschritt ist verständlich.
+- Die Reihenfolge Handlung → Risiko → Erklärung → Technik funktioniert.
+- Die Berichtsfunktion wird als sinnvoller Abschluss erkannt.
+
+### Wichtigste Usability-Probleme
+
+| ID | Problem | Schweregrad | Änderung |
+|---|---|---|---|
+| UT-01 | OBD-II-Anschluss ist für Anfänger unklar | Erheblich | Bebilderte, fahrzeugbezogene Anschlussanleitung |
+| UT-02 | Bestätigung nach erfolgreicher Verbindung fehlt | Erheblich | Zwischenzustand vor dem Scan ergänzen |
+| UT-03 | Ungefähre Scan-Restzeit fehlt | Gering | Restzeit zusätzlich zum Fortschritt anzeigen |
+| UT-04 | Mittlere Dringlichkeit führt nicht eindeutig zur Handlung | Kritisch | Fachlich geprüfte Handlungsgrenzen definieren |
+| UT-05 | Informationsherkunft ist nicht deutlich genug | Erheblich | Messwert, Referenz, Hypothese und KI kennzeichnen |
+| UT-06 | Berichtsdaten sind vor Speicherung nicht sichtbar | Gering | Vorschau und Datenauswahl ergänzen |
+| UT-07 | Gelesene Fahrzeugdaten werden nicht erklärt | Gering | Aufklappbare Datenübersicht bereitstellen |
+
+### Eingearbeitetes Feedback
+
+#### Verbindung
+
+- OBD-II-Anschluss bebildert erklären
+- Adapter- und Fahrzeugkompatibilität vorab prüfen
+- gelesene Daten transparent auflisten
+- erfolgreiche Verbindung vor Scanbeginn bestätigen
+
+#### Scan
+
+- ungefähre Restzeit anzeigen
+- aktuell geprüfte Komponente nennen
+- sicheren Abbruch ermöglichen
+- Nur-Lese-Status sichtbar halten
+
+#### Ergebnis
+
+- unmittelbare Handlung weiterhin zuerst zeigen
+- Risikostufe mit Begründung verbinden
+- keine definitive Fahrtfreigabe erteilen
+- Fakten, Hypothesen und KI-Erklärungen unterscheiden
+- Unsicherheit und Datenlücken anzeigen
+
+#### Bericht
+
+- Vorschau vor Speicherung
+- enthaltene Daten auswählbar
+- Speichern und Teilen trennen
+- lokale Speicherung und Löschen verständlich anbieten
+
+### Kernentscheidung
+
+Der Ablauf funktioniert grundsätzlich. Die wichtigste Verbesserung ist die sichere Übersetzung einer Risikostufe in eine konkrete Handlung. Diese Logik darf nicht allein durch generative KI entstehen, sondern benötigt geprüfte Regeln, Tests und fachliche Freigabe.
+
+### Visuelles Ergebnisboard
+
+- [Usability-Test Ergebnisboard als SVG](assets/usability/autoscan-usability-test-20-08-2026.svg)
+- [Usability-Test Ergebnisboard als PNG](assets/usability/autoscan-usability-test-20-08-2026.png)
+
+### Nächste Schritte
+
+- [ ] Wireframes um Verbindungsbestätigung und Berichtsvorschau erweitern
+- [ ] Handlungsregeln mit Kfz-Fachperson definieren
+- [ ] Informationsherkunft direkt an Diagnoseaussagen kennzeichnen
+- [ ] Klickbaren Prototypen erstellen
+- [ ] Test mit mindestens fünf realen Personen durchführen
+- [ ] KI-Simulation mit realem Verhalten vergleichen
+
+---
+
 ## 2026-08-29 – Projektidee und Projektgrundlage definieren
 
 **Prompt**
