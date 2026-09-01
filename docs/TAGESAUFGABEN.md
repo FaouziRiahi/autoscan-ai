@@ -1397,6 +1397,66 @@ Der Prototyp beantwortet eine andere Frage als die User Stories stellen: US-01 b
 
 ---
 
+## 2026-08-19 – Zweiter Compliance Review
+
+**Prompt**
+
+> Arbeitet weiter an eurem Projekt. Führt einen weiteren Compliance Review für euer Projekt durch.
+
+**Tagesziel**
+
+Den ersten Compliance Review (12.08.) gegen den mittlerweile tatsächlich gebauten Prototyp abgleichen, statt die Checklisten unverändert zu wiederholen.
+
+**Aufgaben**
+
+- [x] Annahmen des ersten Reviews mit dem tatsächlichen Stand abgleichen
+- [x] Risikoregister anhand des echten Prototyps aktualisieren
+- [x] Freigabeentscheidung überprüfen und offene Punkte dokumentieren
+
+**Ergebnisse**
+
+- Sechs zentrale Annahmen aus dem ersten Review im Vorher/Jetzt-Vergleich (u. a. Cloud-Backend → rein clientseitig, „KI-gestützt" → deterministische Regel-Engine)
+- Risikoregister aktualisiert: C-01 bis C-08 neu bewertet, neuer Risikoeintrag C-09 (Wikimedia-Bildlizenzen ohne Attribution) ergänzt
+- Vollständiger Review mit Risiko-Matrix: [`docs/assets/wireframes/compliance-review-2.png`](assets/wireframes/compliance-review-2.png)
+
+**Entscheidungen**
+
+| Entscheidung | Begründung | Verantwortlich |
+|---|---|---|
+| Review als Abgleich statt Wiederholung aufgebaut | Nur ein echter Vorher/Jetzt-Vergleich deckt auf, was sich durch den Prototyp tatsächlich verändert hat | Governance |
+| Freigabestatus „bedingt freigabefähig" bleibt bestehen, aber mit als verletzt markierter Bedingung | Transparenz ist wichtiger als ein optimistischer Status | Legal/Product |
+
+**Chancen und Risiken**
+
+| Typ | Beschreibung | Maßnahme |
+|---|---|---|
+| Chance | Kein Backend und keine externe KI reduzieren mehrere ursprüngliche Risiken (C-02, C-05, C-08) bereits jetzt | In künftigen Reviews als Positivbefund weiterführen |
+| Risiko | Fahrzeugschein-OCR verarbeitet echte FIN-/Kennzeichendaten ohne dokumentierte Rechtsgrundlage | Vor Nutzung mit echten Dokumenten Rechtsgrundlage klären oder auf Testdaten beschränken |
+| Risiko | Wikimedia-Fotos ohne Namensnennung eingebunden (viele CC-BY-SA) | Attributionstext ergänzen, Lizenzen prüfen |
+
+**Governance und Compliance**
+
+- Datenschutz: neuer Fund – echte FIN/Kennzeichen aus Fahrzeugschein-Fotos ohne dokumentierte Rechtsgrundlage (siehe Risiko oben)
+- Informationssicherheit: unverändert, kein Backend vorhanden
+- Rechtliche Prüfung: Bedingung 3 der Freigabeentscheidung vom 12.08. gilt als aktuell verletzt
+- Freigaben: Freigabestatus „bedingt freigabefähig" bestätigt, mit offener kritischer Bedingung
+- Dokumentationspflichten: Review versioniert unter `docs/assets/wireframes/compliance-review-2.png`
+
+**Offene Punkte**
+
+- [ ] Rechtsgrundlage für die Verarbeitung echter Fahrzeugschein-Fotos klären
+- [ ] Lizenzbedingungen der genutzten Wikimedia-Bilder prüfen und Attribution einbauen
+- [ ] Datenschutz-Inventar um den Wikimedia-Datenfluss ergänzen
+- [ ] Entscheiden, ob und wann eine echte KI-Komponente den Regel-Engine-Ansatz ablöst
+
+**Nächste Schritte**
+
+- [ ] Disclaimer-Text entwerfen und in Ergebnis- und Kaufberatungs-Screens einbauen
+- [ ] Attributionszeile unter Fahrzeugfotos ergänzen
+- [ ] Rechtliche Kurzprüfung zur Fahrzeugschein-Verarbeitung einholen, bevor echte Nutzerdaten verarbeitet werden
+
+---
+
 ## 2026-08-29 – Projektidee und Projektgrundlage definieren
 
 **Prompt**
