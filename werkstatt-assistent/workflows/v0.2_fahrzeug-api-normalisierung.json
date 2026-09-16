@@ -1,0 +1,180 @@
+{
+  "name": "AutoScan AI – 16.09.2026 – Fahrzeug-API und Normalisierung",
+  "nodes": [
+    {
+      "id": "60b55fee-05c3-4332-8485-adb61e35cde0",
+      "name": "Manuell starten",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {},
+      "notes": "Tagesaufgabe 16.09.2026: jeden Node einzeln ausführen und Output ansehen. Dieser Workflow ist eigenständig startbar.",
+      "notesInFlow": true
+    },
+    {
+      "id": "ac460f3f-1e87-4335-9067-555139e6b36a",
+      "name": "Testfahrzeug eingeben",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        300,
+        0
+      ],
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "322522ea-8528-470e-a4bb-5abb140a928c",
+              "name": "vin",
+              "value": "5UXWX7C5*BA",
+              "type": "string"
+            },
+            {
+              "id": "4d6dd269-c97f-4fa6-91d9-a065d8f59461",
+              "name": "modelljahr",
+              "value": 2011,
+              "type": "number"
+            }
+          ]
+        },
+        "includeOtherFields": false,
+        "options": {}
+      },
+      "notes": "Öffentliche Beispiel-Teil-FIN aus https://vpic.nhtsa.dot.gov/api/ . Das Sternchen steht für unbekannte Zeichen. Die API unterstützt Teil-FINs. Output prüfen: vin und modelljahr.",
+      "notesInFlow": true
+    },
+    {
+      "id": "a2afac69-2c92-4398-a365-616cfdcc9af7",
+      "name": "Fahrzeugdaten abrufen",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        600,
+        0
+      ],
+      "parameters": {
+        "method": "GET",
+        "url": "={{ 'https://vpic.nhtsa.dot.gov/api/vehicles/DecodeVinValues/' + encodeURIComponent($json.vin) }}",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "format",
+              "value": "json"
+            },
+            {
+              "name": "modelyear",
+              "value": "={{ $json.modelljahr }}"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 30000,
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "notes": "Echte öffentliche API ohne Zugangsdaten. Output → JSON: Results[0] enthält Make, Model, ModelYear sowie ErrorCode und ErrorText. Hinweise bei der Teil-FIN sind möglich.",
+      "notesInFlow": true
+    },
+    {
+      "id": "4c37f255-3934-4f95-b8f5-6b8a1583fb22",
+      "name": "Fahrzeugdaten normalisieren",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        900,
+        0
+      ],
+      "parameters": {
+        "jsCode": "const response = $input.first().json;\nif (!Array.isArray(response.Results) || !response.Results[0]) {\n  throw new Error('Die API-Antwort enthält keine Fahrzeugdaten unter Results[0].');\n}\nconst r = response.Results[0];\nconst text = value => String(value ?? '').trim();\nconst year = text(r.ModelYear);\nreturn [{ json: {\n  marke: text(r.Make) || 'unbekannt',\n  modell: text(r.Model) || 'unbekannt',\n  modelljahr: /^\\d{4}$/.test(year) ? Number(year) : null,\n  api_fehlercode: text(r.ErrorCode),\n  api_hinweis: text(r.ErrorText),\n  quelle: 'NHTSA vPIC',\n  test_hinweis: 'Öffentliche Teil-FIN aus der API-Dokumentation; keine vollständige Fahrzeugidentifikation.'\n} }];"
+      },
+      "notes": "Mapping: Make → marke, Model → modell, ModelYear → modelljahr. Filtering: nur benötigte Felder. Formatting: Leerzeichen entfernen und Jahr als Zahl; fehlendes Jahr bleibt null. API-Hinweise bleiben erhalten.",
+      "notesInFlow": true
+    },
+    {
+      "id": "8874709e-2e64-42d3-8e73-499973d7c89f",
+      "name": "Fahrzeugbericht ausgeben",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1200,
+        0
+      ],
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "7b639371-7081-461b-9469-7024f3ead193",
+              "name": "bericht",
+              "value": "={{ 'AutoScan AI – Fahrzeugdaten: ' + $json.marke + ' ' + $json.modell + ', Modelljahr ' + ($json.modelljahr ?? 'unbekannt') + '. Quelle: ' + $json.quelle + '. ' + $json.test_hinweis + ($json.api_hinweis ? ' API-Hinweis: ' + $json.api_hinweis : '') }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": false,
+        "options": {}
+      },
+      "notes": "Aktion der Übung: deutschen Fahrzeugbericht als JSON-Feld bericht ausgeben. Keine Diagnose. Output prüfen und für die Tagesaufgabe dokumentieren.",
+      "notesInFlow": true
+    }
+  ],
+  "connections": {
+    "Manuell starten": {
+      "main": [
+        [
+          {
+            "node": "Testfahrzeug eingeben",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Testfahrzeug eingeben": {
+      "main": [
+        [
+          {
+            "node": "Fahrzeugdaten abrufen",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fahrzeugdaten abrufen": {
+      "main": [
+        [
+          {
+            "node": "Fahrzeugdaten normalisieren",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fahrzeugdaten normalisieren": {
+      "main": [
+        [
+          {
+            "node": "Fahrzeugbericht ausgeben",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "tags": []
+}
