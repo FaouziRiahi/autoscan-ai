@@ -1,0 +1,209 @@
+{
+  "name": "AutoScan AI_Woche1_Tag4_Workflow_Fehlerhandling",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "babce38a-4531-4f4e-a944-c0d3464f4130",
+      "name": "Manuell starten",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "notesInFlow": true,
+      "notes": "Tagesaufgabe 16.09.2026: jeden Node einzeln ausführen und Output ansehen. Dieser Workflow ist eigenständig startbar."
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "322522ea-8528-470e-a4bb-5abb140a928c",
+              "name": "vin",
+              "value": "5UXWX7C5*BA",
+              "type": "string"
+            },
+            {
+              "id": "4d6dd269-c97f-4fa6-91d9-a065d8f59461",
+              "name": "modelljahr",
+              "value": 2011,
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "82fa19ee-2f6e-4742-b32c-e3025532b567",
+      "name": "Testfahrzeug eingeben",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        304,
+        0
+      ],
+      "notesInFlow": true,
+      "notes": "Öffentliche Beispiel-Teil-FIN aus https://vpic.nhtsa.dot.gov/api/ . Das Sternchen steht für unbekannte Zeichen. Die API unterstützt Teil-FINs. Output prüfen: vin und modelljahr."
+    },
+    {
+      "parameters": {
+        "url": "={{ 'https://vpic.nhtsa.dot.gov/api/vehicles/DecodeVinValues/' + encodeURIComponent($json.vin) }}",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "format",
+              "value": "json"
+            },
+            {
+              "name": "modelyear",
+              "value": "={{ $json.modelljahr }}"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          },
+          "timeout": 30000
+        }
+      },
+      "id": "702755c9-cbd4-47eb-9a43-61a7a547fb94",
+      "name": "Fahrzeugdaten abrufen",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        832,
+        0
+      ],
+      "notesInFlow": true,
+      "onError": "continueRegularOutput",
+      "notes": "Echte öffentliche API ohne Zugangsdaten. Output → JSON: Results[0] enthält Make, Model, ModelYear sowie ErrorCode und ErrorText. Hinweise bei der Teil-FIN sind möglich."
+    },
+    {
+      "parameters": {
+        "jsCode": "try {\n  throw new Error('Absichtlicher Testfehler');\n  const response = $input.first().json;\n\n  // Prüfen, ob Fahrzeugdaten vorhanden sind\n  if (!Array.isArray(response.Results) || !response.Results[0]) {\n    throw new Error(\n      'Die API-Antwort enthält keine Fahrzeugdaten unter Results[0].'\n    );\n  }\n\n  const r = response.Results[0];\n  const text = value => String(value ?? '').trim();\n  const year = text(r.ModelYear);\n\n  // Erfolgreiche Verarbeitung\n  return [{\n    json: {\n      status: 'erfolg',\n      marke: text(r.Make) || 'unbekannt',\n      modell: text(r.Model) || 'unbekannt',\n      modelljahr: /^\\d{4}$/.test(year) ? Number(year) : null,\n      api_fehlercode: text(r.ErrorCode),\n      api_hinweis: text(r.ErrorText),\n      quelle: 'NHTSA vPIC',\n      test_hinweis:\n        'Öffentliche Teil-FIN; keine vollständige Fahrzeugidentifikation.'\n    }\n  }];\n\n} catch (error) {\n  // Fallback: verständliche Ausgabe statt Abbruch\n  return [{\n    json: {\n      status: 'fehler',\n      marke: 'unbekannt',\n      modell: 'unbekannt',\n      modelljahr: null,\n      api_fehlercode: '',\n      api_hinweis: '',\n      quelle: 'NHTSA vPIC',\n      test_hinweis:\n        'Fahrzeugdaten konnten nicht verarbeitet werden. Bitte Eingabe prüfen oder später erneut versuchen.',\n      fehlermeldung: error.message\n    }\n  }];\n}"
+      },
+      "id": "60f1d751-69e1-4b82-8b6f-82716b822d59",
+      "name": "Fahrzeugdaten normalisieren",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1136,
+        0
+      ],
+      "notesInFlow": true,
+      "notes": "Mapping: Make → marke, Model → modell, ModelYear → modelljahr. Filtering: nur benötigte Felder. Formatting: Leerzeichen entfernen und Jahr als Zahl; fehlendes Jahr bleibt null. API-Hinweise bleiben erhalten."
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "7b639371-7081-461b-9469-7024f3ead193",
+              "name": "bericht",
+              "value": "={{ 'AutoScan AI – Fahrzeugdaten: ' + $json.marke + ' ' + $json.modell + ', Modelljahr ' + ($json.modelljahr ?? 'unbekannt') + '. Quelle: ' + $json.quelle + '. ' + $json.test_hinweis + ($json.api_hinweis ? ' API-Hinweis: ' + $json.api_hinweis : '') }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "2d08e069-4d01-4c61-9565-5be39f74d2c1",
+      "name": "Fahrzeugbericht ausgeben",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1424,
+        0
+      ],
+      "notesInFlow": true,
+      "notes": "Aktion der Übung: deutschen Fahrzeugbericht als JSON-Feld bericht ausgeben. Keine Diagnose. Output prüfen und für die Tagesaufgabe dokumentieren."
+    },
+    {
+      "parameters": {
+        "jsCode": "const daten = $input.first().json;\n\n// Prüfen, ob die FIN fehlt oder nur Leerzeichen enthält\nconst vin = String(daten.vin ?? '').trim();\n\nif (vin === '') {\n  throw new Error(\n    'Bitte das Pflichtfeld „vin“ (Fahrzeugidentifikationsnummer) ausfüllen.'\n  );\n}\n\n// Mit gültiger Eingabe zum API-Aufruf weitergehen\nreturn [{\n  json: {\n    ...daten,\n    vin\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        528,
+        0
+      ],
+      "id": "076a0b30-f8bf-43c8-95db-2e71bd453295",
+      "name": "Pflichtfeld prüfen"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Manuell starten": {
+      "main": [
+        [
+          {
+            "node": "Testfahrzeug eingeben",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Testfahrzeug eingeben": {
+      "main": [
+        [
+          {
+            "node": "Pflichtfeld prüfen",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fahrzeugdaten abrufen": {
+      "main": [
+        [
+          {
+            "node": "Fahrzeugdaten normalisieren",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fahrzeugdaten normalisieren": {
+      "main": [
+        [
+          {
+            "node": "Fahrzeugbericht ausgeben",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pflichtfeld prüfen": {
+      "main": [
+        [
+          {
+            "node": "Fahrzeugdaten abrufen",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "ab452b89-c759-4b2a-b75d-318fd5aa4fc7",
+  "meta": {
+    "instanceId": "f032027e20e9709391bcafe9291ae76dc2a07ff2b593bca6936b7404ddb31c33"
+  },
+  "nodeGroups": [],
+  "id": "fxKwdOZsxyguagUE",
+  "tags": []
+}
