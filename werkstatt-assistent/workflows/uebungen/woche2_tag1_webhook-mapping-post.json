@@ -1,0 +1,234 @@
+{
+  "name": "AutoScan AI – Woche 2 Tag 1 – Webhook Mapping POST",
+  "nodes": [
+    {
+      "id": "cd822d4f-f334-4f09-ba90-59addf153a4d",
+      "name": "Fahrzeugdaten per Webhook empfangen",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "autoscan-w2t1-anlegen",
+        "responseMode": "lastNode",
+        "responseData": "firstEntryJson",
+        "options": {}
+      },
+      "notes": "Test URL kopieren, Listen for test event klicken, dann JSON per POST senden. Antwort kommt vom letzten Node. Nur Testdaten verwenden.",
+      "notesInFlow": true,
+      "webhookId": "b06a93c8-aaea-4af2-a635-0cd505db57fc"
+    },
+    {
+      "id": "fb10623f-4f6a-4784-8c03-c20e0605f438",
+      "name": "Eingang prüfen und mappen",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        280,
+        0
+      ],
+      "parameters": {
+        "jsCode": "const body = $input.first().json.body;\nif (!body || typeof body !== 'object' || Array.isArray(body)) {\n  throw new Error('Bitte ein JSON-Objekt im Request-Body senden.');\n}\nconst vin = String(body.vin ?? '').trim().toUpperCase();\nif (!vin) throw new Error('Bitte das Pflichtfeld vin ausfüllen.');\nconst yearText = String(body.modelljahr ?? '').trim();\nif (!/^\\d{4}$/.test(yearText)) {\n  throw new Error('Bitte modelljahr als vierstelliges Jahr angeben.');\n}\nreturn [{ json: { vin, modelljahr: Number(yearText) } }];"
+      },
+      "notes": "Webhook-Daten liegen unter body. FIN trimmen und in Großbuchstaben umwandeln; Modelljahr als Zahl ausgeben. Leere FIN stoppt vor API-Aufruf.",
+      "notesInFlow": true
+    },
+    {
+      "id": "5af20d7a-60c2-4a06-b071-3da22d3aa84f",
+      "name": "Fahrzeugdaten abrufen",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        560,
+        0
+      ],
+      "parameters": {
+        "method": "GET",
+        "url": "={{ 'https://vpic.nhtsa.dot.gov/api/vehicles/DecodeVinValues/' + encodeURIComponent($json.vin) }}",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "format",
+              "value": "json"
+            },
+            {
+              "name": "modelyear",
+              "value": "={{ $json.modelljahr }}"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 30000,
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "notes": "Echte öffentliche API ohne Zugangsdaten. Output → JSON: Results[0] enthält Make, Model, ModelYear sowie ErrorCode und ErrorText. Hinweise bei der Teil-FIN sind möglich.",
+      "notesInFlow": true
+    },
+    {
+      "id": "68874ebe-4dc5-4307-b6e4-79982802bb6f",
+      "name": "Fahrzeugdaten normalisieren",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        840,
+        0
+      ],
+      "parameters": {
+        "jsCode": "const response = $input.first().json;\nif (!Array.isArray(response.Results) || !response.Results[0]) {\n  throw new Error('Die API-Antwort enthält keine Fahrzeugdaten unter Results[0].');\n}\nconst r = response.Results[0];\nconst text = value => String(value ?? '').trim();\nconst year = text(r.ModelYear);\nreturn [{ json: {\n  marke: text(r.Make) || 'unbekannt',\n  modell: text(r.Model) || 'unbekannt',\n  modelljahr: /^\\d{4}$/.test(year) ? Number(year) : null,\n  api_fehlercode: text(r.ErrorCode),\n  api_hinweis: text(r.ErrorText),\n  quelle: 'NHTSA vPIC',\n  test_hinweis: 'Öffentliche Teil-FIN aus der API-Dokumentation; keine vollständige Fahrzeugidentifikation.'\n} }];"
+      },
+      "notes": "Mapping: Make → marke, Model → modell, ModelYear → modelljahr. Filtering: nur benötigte Felder. Formatting: Leerzeichen entfernen und Jahr als Zahl; fehlendes Jahr bleibt null. API-Hinweise bleiben erhalten.",
+      "notesInFlow": true
+    },
+    {
+      "id": "b38dd5b0-bb92-42ca-bbce-1b1ce708e6d1",
+      "name": "Fahrzeugbericht ausgeben",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1120,
+        0
+      ],
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "7b639371-7081-461b-9469-7024f3ead193",
+              "name": "bericht",
+              "value": "={{ 'AutoScan AI – Fahrzeugdaten: ' + $json.marke + ' ' + $json.modell + ', Modelljahr ' + ($json.modelljahr ?? 'unbekannt') + '. Quelle: ' + $json.quelle + '. ' + $json.test_hinweis + ($json.api_hinweis ? ' API-Hinweis: ' + $json.api_hinweis : '') }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "notes": "Aktion der Übung: deutschen Fahrzeugbericht als JSON-Feld bericht ausgeben. Keine Diagnose. Output prüfen und für die Tagesaufgabe dokumentieren.",
+      "notesInFlow": true
+    },
+    {
+      "id": "1d258428-2b94-42cc-967e-bdd9e625b76e",
+      "name": "Fahrzeugbericht für POST mappen",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1400,
+        0
+      ],
+      "parameters": {
+        "jsCode": "const daten = $input.first().json;\nreturn [{ json: {\n  title: `${daten.marke} ${daten.modell} (${daten.modelljahr ?? 'unbekannt'})`,\n  body: daten.bericht,\n  userId: 1\n} }];"
+      },
+      "notes": "Mapping: Marke/Modell/Jahr → title; deutscher Fahrzeugbericht → body; Testbenutzer → userId.",
+      "notesInFlow": true
+    },
+    {
+      "id": "b7ec26ef-7f40-43c3-9df4-6ed2a4502b35",
+      "name": "Testdatensatz per POST anlegen",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1680,
+        0
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "https://jsonplaceholder.typicode.com/posts",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json }}",
+        "options": {
+          "timeout": 30000,
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "notes": "JSONPlaceholder simuliert Schreibzugriffe. Keine dauerhafte Speicherung; kein API-Key erforderlich.",
+      "notesInFlow": true
+    }
+  ],
+  "connections": {
+    "Fahrzeugdaten per Webhook empfangen": {
+      "main": [
+        [
+          {
+            "node": "Eingang prüfen und mappen",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Eingang prüfen und mappen": {
+      "main": [
+        [
+          {
+            "node": "Fahrzeugdaten abrufen",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fahrzeugdaten abrufen": {
+      "main": [
+        [
+          {
+            "node": "Fahrzeugdaten normalisieren",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fahrzeugdaten normalisieren": {
+      "main": [
+        [
+          {
+            "node": "Fahrzeugbericht ausgeben",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fahrzeugbericht ausgeben": {
+      "main": [
+        [
+          {
+            "node": "Fahrzeugbericht für POST mappen",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fahrzeugbericht für POST mappen": {
+      "main": [
+        [
+          {
+            "node": "Testdatensatz per POST anlegen",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "tags": []
+}

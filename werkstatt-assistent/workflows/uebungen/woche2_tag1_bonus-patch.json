@@ -1,0 +1,97 @@
+{
+  "name": "AutoScan AI – Woche 2 Tag 1 – Bonus PATCH",
+  "nodes": [
+    {
+      "id": "af46abb5-03d9-480b-b0d9-2a7abefe3333",
+      "name": "Fahrzeugdaten per Webhook empfangen",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "autoscan-w2t1-aktualisieren",
+        "responseMode": "lastNode",
+        "responseData": "firstEntryJson",
+        "options": {}
+      },
+      "notes": "Test URL kopieren, Listen for test event klicken, dann JSON per POST senden. Antwort kommt vom letzten Node. Nur Testdaten verwenden. Der eingehende Testrequest nutzt POST; der ausgehende API-Aufruf nutzt PATCH. Bestehenden Testdatensatz 1 verwenden, nicht die von POST zurückgegebene ID 101.",
+      "notesInFlow": true,
+      "webhookId": "77ffc953-f858-47c3-b1e4-5c48a6ac4c18"
+    },
+    {
+      "id": "cbc4d996-9f6d-41be-ad31-816d0d47fbe1",
+      "name": "Änderung prüfen und mappen",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        280,
+        0
+      ],
+      "parameters": {
+        "jsCode": "const body = $input.first().json.body;\nif (!body || typeof body !== 'object' || Array.isArray(body)) {\n  throw new Error('Bitte ein JSON-Objekt im Request-Body senden.');\n}\nconst id = Number(body.datensatz_id);\nif (!Number.isInteger(id) || id < 1 || id > 100) {\n  throw new Error('Für die Test-API bitte datensatz_id zwischen 1 und 100 angeben.');\n}\nconst bericht = String(body.bericht ?? '').trim();\nif (!bericht) throw new Error('Bitte das Pflichtfeld bericht ausfüllen.');\nreturn [{ json: { datensatz_id: id, body: bericht } }];"
+      },
+      "notes": "datensatz_id → URL; bericht trimmen und nach body mappen. Nur den Bericht aktualisieren.",
+      "notesInFlow": true
+    },
+    {
+      "id": "c24faf3a-2a5a-4173-9fc8-691605e25b6e",
+      "name": "Testdatensatz per PATCH aktualisieren",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        560,
+        0
+      ],
+      "parameters": {
+        "method": "PATCH",
+        "url": "={{ 'https://jsonplaceholder.typicode.com/posts/' + $json.datensatz_id }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { body: $json.body } }}",
+        "options": {
+          "timeout": 30000,
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "notes": "JSONPlaceholder simuliert Schreibzugriffe. Keine dauerhafte Speicherung; kein API-Key erforderlich.",
+      "notesInFlow": true
+    }
+  ],
+  "connections": {
+    "Fahrzeugdaten per Webhook empfangen": {
+      "main": [
+        [
+          {
+            "node": "Änderung prüfen und mappen",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Änderung prüfen und mappen": {
+      "main": [
+        [
+          {
+            "node": "Testdatensatz per PATCH aktualisieren",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "tags": []
+}
