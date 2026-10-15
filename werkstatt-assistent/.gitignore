@@ -1,0 +1,7 @@
+# Nicht ins Repository: persönliche Fotos, Videos, Zugangsdaten
+*.mov
+*.mp4
+*.zip
+*.env
+**/Quelle/
+**/alt/
