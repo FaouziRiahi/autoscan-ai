@@ -1,5 +1,5 @@
 {
-  "name": "AutoScan AI – Woche 4 Tag 4 – Logging, Tokens und Alert",
+  "name": "AutoScan AI – Demo 16.10.2026",
   "nodes": [
     {
       "parameters": {},
@@ -16,7 +16,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const item=$input.first();\nconst incoming=item.json;\nconst defaults={\"anfrage\": \"Mein BMW X3 von 2011 ruckelt beim Start. Die Motorkontrollleuchte ist an. Mein Scanner zeigt P0300. Kilometerstand: 85.000. Ich möchte einen Werkstatttermin.\", \"vin\": \"5UXWX7C5*BA\", \"modelljahr\": 2011, \"kilometer\": \"85000\", \"fehlercodes\": [\" p0300 \", \"P0300\"], \"ki_modell\": \"gpt-4.1-mini\", \"email_absender\": \"\", \"email_empfaenger\": \"\", \"supabase_url\": \"https://fqioijzaddphmcszavbg.supabase.co\", \"alert_aktiv\": true, \"prompt_variante\": \"original\", \"referenzfall_id\": \"REF01\", \"runs_pro_tag\": null, \"tage_pro_monat\": 30, \"obd2_testfall\": \"p0300\"};\nif (!incoming.eingabeweg) return [{json:{...defaults,eingabe_modul:false}}];\n// Formulardaten haben Vorrang. Keine BMW-Demodaten in Fotoanfragen einmischen.\nconst cfg={};\nfor(const k of ['ki_modell','email_absender','email_empfaenger','supabase_url','alert_aktiv','prompt_variante','referenzfall_id','runs_pro_tag','tage_pro_monat']) cfg[k]=defaults[k];\nlet anfrage=String(incoming.anfrage??'').trim();\nlet anfrageQuelle='Manuelle Eingabe';\nif(!anfrage){\n anfrageQuelle='Technischer Hinweis: keine Symptombeschreibung vorhanden';\n anfrage=incoming.eingabeweg==='Fahrzeugschein-Foto'\n ? 'Fahrzeugdokument zur Erfassung hochgeladen. Es wurde noch kein Fahrzeugproblem beschrieben. Bitte nach dem Anliegen und den Symptomen fragen.'\n : 'Armaturenbrett-Foto hochgeladen. Eine manuelle Symptombeschreibung fehlt. Sichtbare Symbole sind unbestätigte Bildinformationen; bitte weitere Angaben erfragen.';\n}\nreturn [{json:{...cfg,...incoming,anfrage,anfrage_quelle:anfrageQuelle,eingabe_modul:true,fehlercodes:incoming.fehlercodes??[],bild_token_usage:incoming.token_usage??null},binary:item.binary??{}}];"
+        "jsCode": "const item=$input.first();\nconst incoming=item.json;\nconst defaults={\"anfrage\": \"Mein BMW X3 von 2011 ruckelt beim Start. Die Motorkontrollleuchte ist an. Mein Scanner zeigt P0300. Kilometerstand: 85.000. Ich möchte einen Werkstatttermin.\", \"vin\": \"5UXWX7C5*BA\", \"modelljahr\": 2011, \"kilometer\": \"85000\", \"fehlercodes\": [\" p0300 \", \"P0300\"], \"ki_modell\": \"gpt-4.1-mini\", \"email_absender\": \"\", \"email_empfaenger\": \"\", \"supabase_url\": \"https://fqioijzaddphmcszavbg.supabase.co\", \"alert_aktiv\": false, \"prompt_variante\": \"original\", \"referenzfall_id\": \"REF01\", \"runs_pro_tag\": null, \"tage_pro_monat\": 30, \"obd2_testfall\": \"p0300\"};\nif (!incoming.eingabeweg) return [{json:{...defaults,eingabe_modul:false}}];\n// Formulardaten haben Vorrang. Keine BMW-Demodaten in Fotoanfragen einmischen.\nconst cfg={};\nfor(const k of ['ki_modell','email_absender','email_empfaenger','supabase_url','alert_aktiv','prompt_variante','referenzfall_id','runs_pro_tag','tage_pro_monat']) cfg[k]=defaults[k];\n// Formularläufe sind keine Referenzfälle des Demo-Sets.\ncfg.referenzfall_id='';\nlet anfrage=String(incoming.anfrage??'').trim();\nlet anfrageQuelle='Manuelle Eingabe';\nif(!anfrage){\n anfrageQuelle='Technischer Hinweis: keine Symptombeschreibung vorhanden';\n anfrage=incoming.eingabeweg==='Fahrzeugschein-Foto'\n ? 'Fahrzeugdokument zur Erfassung hochgeladen. Es wurde noch kein Fahrzeugproblem beschrieben. Bitte nach dem Anliegen und den Symptomen fragen.'\n : 'Armaturenbrett-Foto hochgeladen. Eine manuelle Symptombeschreibung fehlt. Sichtbare Symbole sind unbestätigte Bildinformationen; bitte weitere Angaben erfragen.';\n}\nreturn [{json:{...cfg,...incoming,anfrage,anfrage_quelle:anfrageQuelle,eingabe_modul:true,fehlercodes:incoming.fehlercodes??[],bild_token_usage:incoming.token_usage??null},binary:item.binary??{}}];"
       },
       "id": "df95eff2-ebaf-462c-ae1d-d2fed1238e80",
       "name": "02 Kundenanfrage eingeben",
@@ -27,7 +27,7 @@
         128
       ],
       "notesInFlow": true,
-      "notes": "Hier Kundentext und strukturierte Fahrzeugangaben bearbeiten. FIN ist öffentliche Beispiel-Teil-FIN aus vPIC-Dokumentation. Keine echten Kundendaten für den ersten Test verwenden. E-MAIL: email_absender und email_empfaenger eintragen. Zuerst eigene Testadresse als Empfänger verwenden. Absender muss zum SMTP-Zugang passen. SUPABASE: supabase_url durch die Project URL ersetzen, ohne /rest/v1. Keinen Schlüssel hier eintragen. ALERT: Nach Konfiguration der Slack-Webhook-URL in Node 18 alert_aktiv=true setzen. Kein Schlüssel oder Webhook-Geheimnis im Kundentext. TAGESAUFGABE 13.10.2026: prompt_variante = original oder optimiert; referenzfall_id dokumentieren. runs_pro_tag auf erwartete Anzahl setzen (null = unbekannt), tage_pro_monat=30 ist eine Planungsannahme. Referenzfälle im Hinweis-Node. Jeder komplette Testlauf kann wie bisher in Supabase speichern; SMTP bleibt deaktiviert. Integrations-Mapping: manueller Start behält bisherige Demo und Konfiguration. Formular-Start übernimmt echte Eingaben, nie Demo-FIN/-Modelljahr. Konfiguration im defaults-Objekt dieses Code-Nodes bearbeiten."
+      "notes": "Hier Kundentext und strukturierte Fahrzeugangaben bearbeiten. FIN ist öffentliche Beispiel-Teil-FIN aus vPIC-Dokumentation. Keine echten Kundendaten für den ersten Test verwenden. E-MAIL: email_absender und email_empfaenger eintragen. Zuerst eigene Testadresse als Empfänger verwenden. Absender muss zum SMTP-Zugang passen. SUPABASE: supabase_url durch die Project URL ersetzen, ohne /rest/v1. Keinen Schlüssel hier eintragen. ALERT: Nach Konfiguration der Slack-Webhook-URL in Node 18 alert_aktiv=true setzen. Kein Schlüssel oder Webhook-Geheimnis im Kundentext. TAGESAUFGABE 13.10.2026: prompt_variante = original oder optimiert; referenzfall_id dokumentieren. runs_pro_tag auf erwartete Anzahl setzen (null = unbekannt), tage_pro_monat=30 ist eine Planungsannahme. Referenzfälle im Hinweis-Node. Jeder komplette Testlauf kann wie bisher in Supabase speichern; SMTP bleibt deaktiviert. Integrations-Mapping: manueller Start behält bisherige Demo und Konfiguration. Formular-Start übernimmt echte Eingaben, nie Demo-FIN/-Modelljahr. Konfiguration im defaults-Objekt dieses Code-Nodes bearbeiten. DEMO-KOPIE 16.10.2026: alert_aktiv=false, bis eine echte Slack-Webhook-URL in Node 18 eingetragen ist. Formularläufe erhalten referenzfall_id leer; nur der manuelle Start nutzt REF01."
     },
     {
       "parameters": {
@@ -1012,11 +1012,9 @@
     "executionOrder": "v1",
     "binaryMode": "separate"
   },
-  "versionId": "648a0460-30d6-4de9-90d6-f5313a78d938",
   "meta": {
     "instanceId": "f032027e20e9709391bcafe9291ae76dc2a07ff2b593bca6936b7404ddb31c33"
   },
   "nodeGroups": [],
-  "id": "VriHA5woFPu8SR8f",
   "tags": []
 }
