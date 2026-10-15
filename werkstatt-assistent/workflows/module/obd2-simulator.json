@@ -1,0 +1,150 @@
+{
+  "name": "AutoScan AI – Subworkflow OBD2-Simulator",
+  "nodes": [
+    {
+      "id": "3754fd31-0678-442a-b5a8-c98b6b15d24f",
+      "name": "01 Vom Hauptworkflow empfangen",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "notesInFlow": true,
+      "notes": "Eingang: JSON des Hauptworkflows, optional obd2_testfall. Unterstützt ohne_fehler, p0300, p0420, verbindungsfehler. Ohne Auswahl: p0300. Keine Verbindung zum echten Fahrzeug."
+    },
+    {
+      "id": "60ce9eb5-2232-46a0-8c95-daa862b4899e",
+      "name": "00 Simulator manuell starten",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        280
+      ],
+      "parameters": {},
+      "notesInFlow": true,
+      "notes": "Für den ersten Test direkt Execute workflow klicken. Der Testfall wird in 00a ausgewählt."
+    },
+    {
+      "id": "230860c0-9dee-4486-9140-bb629db43490",
+      "name": "00a Testfall auswählen",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        300,
+        280
+      ],
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "{\n  \"obd2_testfall\": \"p0300\"\n}",
+        "options": {}
+      },
+      "notesInFlow": true,
+      "notes": "obd2_testfall auf ohne_fehler, p0300, p0420 oder verbindungsfehler setzen. Keine API-Zugangsdaten notwendig."
+    },
+    {
+      "id": "ffe5ad29-6954-4b83-a093-d30bd4fedb10",
+      "name": "02 OBD2-Daten simulieren",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        640,
+        0
+      ],
+      "parameters": {
+        "jsCode": "const item=$input.first();\nconst d=item.json;\nconst fall=String(d.obd2_testfall??'p0300').trim().toLowerCase();\nconst allowed=['ohne_fehler','p0300','p0420','verbindungsfehler'];\nif(!allowed.includes(fall)) throw new Error('Ungültiger obd2_testfall. Erlaubt: '+allowed.join(', '));\nconst zeit=new Date().toISOString();\nconst messwert=(name,wert,einheit)=>({name,wert,einheit,quelle:'OBD2-Simulator',simuliert:true});\nconst katalog={\n p0300:{codes:['P0300'],beschreibung:'Zufällige oder mehrfache Verbrennungsaussetzer; keine bestätigte Fehlerursache.',drehzahl:820,kuehlmittel:90,spannung:13.9},\n p0420:{codes:['P0420'],beschreibung:'Katalysatorwirkung unter dem Grenzwert (Bank 1); keine bestätigte Fehlerursache.',drehzahl:780,kuehlmittel:92,spannung:14.1},\n ohne_fehler:{codes:[],beschreibung:'Simulierter Fehlerspeicher enthält keine Codes. Das beweist keinen fehlerfreien Fahrzeugzustand.',drehzahl:800,kuehlmittel:88,spannung:14.0}\n};\nlet obd2;\nif(fall==='verbindungsfehler') {\n obd2={simuliert:true,datenquelle:'OBD2-Simulator',testfall:fall,zeitstempel:zeit,verbindungsstatus:'FEHLER',auslesestatus:'KEINE_DATEN',fehlercodes:null,code_details:null,messwerte:null,fehler:{code:'ADAPTER_NICHT_ERREICHBAR',nachricht:'Simulierter Adapter ist nicht erreichbar. Es wurden keine Fahrzeugdaten gelesen.'}};\n} else {\n const v=katalog[fall];\n obd2={simuliert:true,datenquelle:'OBD2-Simulator',testfall:fall,zeitstempel:zeit,verbindungsstatus:'VERBUNDEN_SIMULIERT',auslesestatus:'ERFOLGREICH_SIMULIERT',fehlercodes:v.codes,code_details:v.codes.map(code=>({code,bedeutung:v.beschreibung,quelle:'Lokaler Demo-Katalog'})),messwerte:[messwert('Motordrehzahl',v.drehzahl,'U/min'),messwert('Kühlmitteltemperatur',v.kuehlmittel,'°C'),messwert('Bordspannung',v.spannung,'V')],fehler:null};\n}\n// Alle Eingangsdaten erhalten; Kundenangaben nicht mit Simulatorwerten überschreiben.\nreturn [{json:{\n ...d,\n obd2,\n obd2_status:obd2.auslesestatus,\n obd2_simulation:true,\n obd2_hinweis:'SIMULATION – keine Messung am echten Fahrzeug. Messwerte und Fehlercodes sind Beispieldaten. Keine Diagnose oder Fahrfreigabe.',\n obd2_naechster_schritt:fall==='verbindungsfehler'?'ADAPTERVERBINDUNG_PRUEFEN':'SIMULATIONSDATEN_FUER_BERICHT_VERWENDEN'\n},binary:item.binary??{}}];"
+      },
+      "notesInFlow": true,
+      "notes": "Deterministische Testdaten, keine Fahrzeugkommunikation. Verbindungsfehler: Codes und Messwerte null. Erfolgreicher leerer Fehlerspeicher: fehlercodes=[]. Keine Codes löschen, keine Steuergeräte verändern."
+    },
+    {
+      "id": "2dcd832b-7e9f-4243-af31-5b5145fcb3ee",
+      "name": "03 OBD2-Ergebnis ausgeben",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        980,
+        0
+      ],
+      "parameters": {
+        "jsCode": "return $input.all();"
+      },
+      "notesInFlow": true,
+      "notes": "Modul-Ausgang: originale Eingaben plus obd2, obd2_status, obd2_simulation und Hinweis. Im Hauptworkflow später obd2.fehlercodes als Simulatorquelle getrennt von manuell genannten Codes verarbeiten."
+    },
+    {
+      "id": "1a34fd1d-786f-478d-83e8-b399739afdc1",
+      "name": "Dokumentation OBD2-Simulator",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        520
+      ],
+      "parameters": {
+        "content": "# AutoScan AI · OBD2-Simulator\n\n**Ziel:** Für die Demo einen OBD2-Adapter simulieren. Es besteht keine Verbindung zu einem echten Fahrzeug.\n\n## Erster Test\nExecute workflow → 00a Testfall auswählen (Standard p0300) → Output von 03 ansehen.\nFür weitere Tests obd2_testfall ändern und erneut starten.\n\n## Testfälle\n- ohne_fehler: erfolgreich gelesen, Codes []; kein Nachweis für Fehlerfreiheit.\n- p0300: Verbrennungsaussetzer als simuliertes Code-Szenario.\n- p0420: Katalysatorhinweis als simuliertes Code-Szenario.\n- verbindungsfehler: Status FEHLER / KEINE_DATEN; Codes und Messwerte null.\n\n## Hauptworkflow-Anbindung\nDieser Workflow kann über Execute Sub-workflow aufgerufen werden. Trigger 01 akzeptiert alle Eingangsdaten; obd2_testfall steuert das Szenario. Der letzte Node liefert JSON und binary zurück. Die Anbindung ist der nächste Schritt; sie wurde in dieser Datei noch nicht vorgenommen.\n\n## Modulvertrag\nEingang: JSON + optional binary, obd2_testfall.\nAusgang: Eingangsdaten unverändert plus obd2-Objekt, Status und Simulationshinweis. Vorhandene fehlercodes bleiben Kundenangaben und werden nicht überschrieben.\n\n## Grenzen\nKeine Diagnosesicherheit, Fahrtauglichkeitsbewertung, Messung, externe API oder Nachrichten. Keine OpenAI-Kosten in diesem Modul. Daten werden ausschließlich in n8n ausgegeben.",
+        "width": 1100,
+        "height": 850
+      },
+      "notesInFlow": true,
+      "notes": ""
+    }
+  ],
+  "connections": {
+    "01 Vom Hauptworkflow empfangen": {
+      "main": [
+        [
+          {
+            "node": "02 OBD2-Daten simulieren",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "00 Simulator manuell starten": {
+      "main": [
+        [
+          {
+            "node": "00a Testfall auswählen",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "00a Testfall auswählen": {
+      "main": [
+        [
+          {
+            "node": "02 OBD2-Daten simulieren",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "02 OBD2-Daten simulieren": {
+      "main": [
+        [
+          {
+            "node": "03 OBD2-Ergebnis ausgeben",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Europe/Berlin"
+  },
+  "tags": []
+}

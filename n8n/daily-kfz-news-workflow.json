@@ -1,0 +1,118 @@
+{
+  "name": "AutoScan AI – Daily KFZ News",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "days",
+              "daysInterval": 1,
+              "triggerAtHour": 7,
+              "triggerAtMinute": 0
+            }
+          ]
+        }
+      },
+      "id": "a1a1a1a1-0001-4a1a-8a1a-000000000001",
+      "name": "Täglicher Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [0, 300]
+    },
+    {
+      "parameters": {
+        "url": "https://news.google.com/rss/search?q=Autor%C3%BCckruf%20OR%20KFZ-R%C3%BCckruf%20OR%20Gebrauchtwagenmarkt&hl=de&gl=DE&ceid=DE:de"
+      },
+      "id": "a1a1a1a1-0002-4a1a-8a1a-000000000002",
+      "name": "KFZ-News abrufen",
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.1,
+      "position": [260, 300]
+    },
+    {
+      "parameters": {
+        "maxItems": 8
+      },
+      "id": "a1a1a1a1-0003-4a1a-8a1a-000000000003",
+      "name": "Auf 8 begrenzen",
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [520, 300]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            { "id": "1", "name": "title", "type": "string", "value": "={{ $json.title }}" },
+            { "id": "2", "name": "link", "type": "string", "value": "={{ $json.link }}" },
+            { "id": "3", "name": "pubDate", "type": "string", "value": "={{ $json.pubDate || $json.isoDate }}" },
+            { "id": "4", "name": "source", "type": "string", "value": "={{ $json.creator || 'Google News' }}" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "a1a1a1a1-0004-4a1a-8a1a-000000000004",
+      "name": "Felder normalisieren",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [780, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all().map((entry) => entry.json);\nreturn [{ json: { updatedAt: new Date().toISOString(), items } }];"
+      },
+      "id": "a1a1a1a1-0005-4a1a-8a1a-000000000005",
+      "name": "JSON zusammenbauen",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1040, 300]
+    },
+    {
+      "parameters": {
+        "operation": "toJson",
+        "options": {}
+      },
+      "id": "a1a1a1a1-0006-4a1a-8a1a-000000000006",
+      "name": "In Datei umwandeln",
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [1300, 300]
+    },
+    {
+      "parameters": {
+        "operation": "write",
+        "fileName": "/PASSE-DIESEN-PFAD-AN/Autoscan AI/frontend/public/news.json",
+        "dataPropertyName": "data"
+      },
+      "id": "a1a1a1a1-0007-4a1a-8a1a-000000000007",
+      "name": "In App-Ordner schreiben",
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [1560, 300]
+    }
+  ],
+  "connections": {
+    "Täglicher Trigger": {
+      "main": [[{ "node": "KFZ-News abrufen", "type": "main", "index": 0 }]]
+    },
+    "KFZ-News abrufen": {
+      "main": [[{ "node": "Auf 8 begrenzen", "type": "main", "index": 0 }]]
+    },
+    "Auf 8 begrenzen": {
+      "main": [[{ "node": "Felder normalisieren", "type": "main", "index": 0 }]]
+    },
+    "Felder normalisieren": {
+      "main": [[{ "node": "JSON zusammenbauen", "type": "main", "index": 0 }]]
+    },
+    "JSON zusammenbauen": {
+      "main": [[{ "node": "In Datei umwandeln", "type": "main", "index": 0 }]]
+    },
+    "In Datei umwandeln": {
+      "main": [[{ "node": "In App-Ordner schreiben", "type": "main", "index": 0 }]]
+    }
+  },
+  "active": false,
+  "settings": { "executionOrder": "v1" },
+  "pinData": {}
+}

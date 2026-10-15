@@ -1,0 +1,86 @@
+{
+  "name": "AutoScan AI v3 – Fehler-Alert",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "89c88be3-3818-4f0f-9fb8-eb2c7fb5ad70",
+      "name": "Fehler im Hauptworkflow",
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "notes": "Startet automatisch, wenn der Hauptworkflow abstürzt (z. B. Code-Fehler).",
+      "notesInFlow": true
+    },
+    {
+      "parameters": {
+        "jsCode": "const e = $input.first().json;\nconst esc = x => String(x ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;');\nreturn [{ json: {\n  empfaenger: '', // hier Alert-Adresse eintragen\n  betreff: '🚨 AutoScan AI: Workflow abgebrochen',\n  html: `<p><b>Der Workflow ${esc(e.workflow?.name)} ist abgebrochen.</b></p><p>Execution: ${esc(e.execution?.id)}<br>Node: ${esc(e.execution?.lastNodeExecuted)}<br>Fehler: ${esc(e.execution?.error?.message)}</p><p><a href=\"${esc(e.execution?.url)}\">Execution öffnen</a></p>`,\n} }];"
+      },
+      "id": "d0e174c1-fdd0-4eaf-b7a8-4ab52b608a6b",
+      "name": "Alert vorbereiten",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        260,
+        0
+      ],
+      "notes": "Empfänger hier eintragen. Enthält nur technische Daten, keine Kundendaten.",
+      "notesInFlow": true
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.empfaenger }}",
+        "subject": "={{ $json.betreff }}",
+        "emailType": "html",
+        "message": "={{ $json.html }}",
+        "options": {
+          "appendAttribution": false,
+          "senderName": "AutoScan AI"
+        }
+      },
+      "id": "44ec0487-116f-4c3d-8470-701271120156",
+      "name": "Gmail Alert",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        520,
+        0
+      ],
+      "webhookId": "3aafb65d-dcad-41a5-857e-8df66d63040b",
+      "notes": "Gmail-Credential auswählen.",
+      "notesInFlow": true
+    }
+  ],
+  "connections": {
+    "Fehler im Hauptworkflow": {
+      "main": [
+        [
+          {
+            "node": "Alert vorbereiten",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Alert vorbereiten": {
+      "main": [
+        [
+          {
+            "node": "Gmail Alert",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "tags": []
+}

@@ -1,0 +1,177 @@
+{
+  "name": "AutoScan AI – Eingang – Schritt 1 Bild und manuelle Anfrage",
+  "nodes": [
+    {
+      "id": "27f32945-336f-4517-8241-1901e656b122",
+      "name": "01 AutoScan Formular",
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {
+        "formTitle": "AutoScan AI – Ihre Werkstattanfrage",
+        "formDescription": "Beschreiben Sie Ihr Problem oder laden Sie ein Foto des Armaturenbretts hoch. Bitte nur im sicher abgestellten Fahrzeug fotografieren. In diesem ersten Schritt wird die Eingabe erfasst; eine Bildauswertung folgt später.",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Eingabeweg",
+              "fieldName": "eingabeweg",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Manuell"
+                  },
+                  {
+                    "option": "Armaturenbrett-Foto"
+                  }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Armaturenbrett-Foto",
+              "fieldName": "foto",
+              "fieldType": "file",
+              "multipleFiles": false,
+              "acceptFileTypes": ".jpg,.jpeg,.png",
+              "requiredField": false
+            },
+            {
+              "fieldLabel": "Problembeschreibung",
+              "fieldName": "anfrage",
+              "fieldType": "textarea",
+              "placeholder": "Zum Beispiel: Die Kontrollleuchte ist an und das Auto ruckelt beim Start.",
+              "requiredField": false
+            },
+            {
+              "fieldLabel": "Marke und Modell",
+              "fieldName": "fahrzeug_manuell",
+              "fieldType": "text",
+              "placeholder": "Zum Beispiel: BMW X3",
+              "requiredField": false
+            },
+            {
+              "fieldLabel": "Modelljahr",
+              "fieldName": "modelljahr",
+              "fieldType": "number",
+              "placeholder": "2011",
+              "requiredField": false
+            },
+            {
+              "fieldLabel": "Kilometerstand",
+              "fieldName": "kilometer",
+              "fieldType": "number",
+              "placeholder": "85000",
+              "requiredField": false
+            },
+            {
+              "fieldLabel": "Fehlercodes",
+              "fieldName": "fehlercodes",
+              "fieldType": "text",
+              "placeholder": "P0300, P0420 (falls bekannt)",
+              "requiredField": false
+            },
+            {
+              "fieldLabel": "FIN (optional)",
+              "fieldName": "vin",
+              "fieldType": "text",
+              "placeholder": "FIN oder öffentliche Beispiel-Teil-FIN 5UXWX7C5*BA",
+              "requiredField": false
+            }
+          ]
+        },
+        "responseMode": "lastNode",
+        "options": {
+          "path": "autoscan-eingang",
+          "buttonLabel": "Anfrage übermitteln",
+          "appendAttribution": false,
+          "formSubmittedText": "Ihre Eingabe wurde geprüft und entgegengenommen. Die Bildauswertung wird im nächsten Schritt ergänzt."
+        }
+      },
+      "notes": "Execute workflow startet den vollständigen Test. Test URL im Node öffnen. Foto optional bei Manuell; bei Armaturenbrett-Foto verlangt der Prüf-Node eine Bilddatei. Noch keine externe API und kein Nachrichtenversand.",
+      "notesInFlow": true,
+      "webhookId": "1b0632df-1c03-47e3-b020-3b34bd1b1ff3"
+    },
+    {
+      "id": "a509fb62-45ca-4316-92db-d0e38453cb24",
+      "name": "02 Eingaben prüfen und normalisieren",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        360,
+        0
+      ],
+      "parameters": {
+        "jsCode": "const item = $input.first();\nconst d = item.json;\n// Auch ältere n8n-Versionen mit Feldlabels als JSON-Schlüssel unterstützen.\nconst field = (key, label) => d[key] ?? d[label];\nconst text = value => String(value ?? '').trim();\nconst weg = text(field('eingabeweg', 'Eingabeweg'));\nconst anfrage = text(field('anfrage', 'Problembeschreibung'));\nconst binaries = item.binary ?? {};\nconst files = Object.entries(binaries);\nconst errors = [];\nif (!['Manuell', 'Armaturenbrett-Foto'].includes(weg)) errors.push('Bitte den Eingabeweg auswählen.');\nif (weg === 'Manuell' && !anfrage) errors.push('Bitte Ihr Problem beschreiben.');\nif (weg === 'Armaturenbrett-Foto' && files.length === 0) errors.push('Bitte ein Armaturenbrett-Foto hochladen.');\nif (files.length > 1) errors.push('Bitte nur ein Foto hochladen.');\nlet bild = null;\nif (files.length === 1) {\n const [key, meta] = files[0];\n const mime = text(meta.mimeType).toLowerCase();\n if (!['image/jpeg', 'image/png'].includes(mime)) errors.push('Bitte ein JPEG- oder PNG-Bild verwenden.');\n else {\n  const buffer = await this.helpers.getBinaryDataBuffer(0, key);\n  const png = buffer.length >= 8 && buffer.subarray(0,8).equals(Buffer.from([137,80,78,71,13,10,26,10]));\n  const jpeg = buffer.length >= 3 && buffer[0]===255 && buffer[1]===216 && buffer[2]===255;\n  if (!((mime==='image/png' && png) || (mime==='image/jpeg' && jpeg))) errors.push('Bilddatei passt nicht zum angegebenen Dateityp.');\n  if (buffer.length > 8*1024*1024) errors.push('Bitte ein Foto mit höchstens 8 MB hochladen.');\n  if (buffer.length === 0) errors.push('Die Bilddatei ist leer.');\n  bild = {binary_feld:key,dateiname:meta.fileName??null,mime_type:mime,groesse_bytes:buffer.length,erkennung_status:'NOCH_NICHT_AUSGEWERTET'};\n }\n}\nconst rawYear = text(field('modelljahr','Modelljahr'));\nconst year = rawYear ? Number(rawYear) : null;\nif (year !== null && (!Number.isInteger(year) || year < 1981 || year > new Date().getFullYear()+1)) errors.push('Bitte ein gültiges Modelljahr eingeben.');\nconst rawKm = text(field('kilometer','Kilometerstand'));\nconst km = rawKm ? Number(rawKm) : null;\nif (km !== null && (!Number.isInteger(km) || km < 0)) errors.push('Bitte einen gültigen Kilometerstand eingeben.');\nconst vin = text(field('vin','FIN (optional)')).toUpperCase();\nif (vin && vin !== '5UXWX7C5*BA' && !/^[A-HJ-NPR-Z0-9]{17}$/.test(vin)) errors.push('Bitte eine gültige FIN eingeben oder das optionale Feld leer lassen.');\nconst codes = [...new Set(text(field('fehlercodes','Fehlercodes')).split(/[,;\\s]+/).filter(Boolean).map(c=>c.toUpperCase()))];\nif (codes.some(c=>!/^[PCBU][0-3][0-9A-F]{3}$/.test(c))) errors.push('Bitte gültige Fehlercodes wie P0300 eingeben.');\nif (errors.length) throw new Error(errors.join(' '));\nreturn [{json:{\n status:'EINGABE_GEPRUEFT',\n eingegangen_am:new Date().toISOString(),\n eingabeweg:weg,\n anfrage,\n fahrzeug_manuell:text(field('fahrzeug_manuell','Marke und Modell')) || null,\n vin:vin || null,\n modelljahr:year,\n kilometer:km,\n fehlercodes:codes,\n bild,\n naechster_schritt:bild ? 'BILD_AUSWERTEN_UND_BESTAETIGEN_LASSEN' : 'MANUELLE_ANGABEN_VERARBEITEN',\n hinweis:'Noch keine KI-Erkennung, Fahrzeugdiagnose oder Werkstatt-Terminbestätigung.'\n},binary:binaries}];"
+      },
+      "notes": "Vertrag: JSON mit normalisierten Feldern plus unveränderte binary-Datei. Modelljahr/FIN optional, fehlende Angaben bleiben null. Fehler stoppen vor späteren API-Aufrufen. Keine erfundene FIN. MIME/Signatur/Größe prüfen keine Bildinhaltserkennung.",
+      "notesInFlow": true
+    },
+    {
+      "id": "95ed659c-8c9d-40bd-bd5f-08da00958654",
+      "name": "03 Eingang für nächsten Schritt",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        720,
+        0
+      ],
+      "parameters": {
+        "jsCode": "// Daten einschließlich binary unverändert an den späteren Subworkflow weitergeben.\nreturn $input.all();"
+      },
+      "notes": "Im Output JSON und Binary prüfen. Hier verbinden wir im nächsten Schritt die Bildauswertung bzw. den bestehenden AutoScan-Hauptablauf.",
+      "notesInFlow": true
+    },
+    {
+      "id": "695ce96c-dd66-4207-9980-a11f4ce8521f",
+      "name": "Dokumentation – Schritt 1",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        320
+      ],
+      "parameters": {
+        "content": "# AutoScan AI · Architekturaufbau · Schritt 1\n\n**Ziel:** Bild oder manuelle Anfrage erfassen und prüfen. Dies ist das neue Eingangmodul zur späteren Integration in den Original-Workflow, keine Kopie des kompletten Workflows.\n\n**Test:** Execute workflow → Testformular öffnen → Eingaben absenden → Node 02/03 Output prüfen.\n\n**Manuell:** Eingabeweg Manuell, Problembeschreibung ausfüllen.\n**Foto:** Eingabeweg Armaturenbrett-Foto, ein JPEG/PNG hochladen (max. 8 MB). Beschreibung ist ergänzend optional.\n\n**Output:** anfrage, fahrzeug_manuell, vin, modelljahr, kilometer, fehlercodes, bild-Metadaten plus binary.\n\n**Fehler:** leere manuelle Beschreibung; Foto fehlt; Dateityp/Größe ungültig; ungültige Fahrzeugdaten.\n\n**Grenze:** noch keine Bildauswertung, OpenAI-Kosten oder Speicherung. Im nächsten Schritt Vision-Auswertung als Subworkflow bauen und unsichere Erkennungen bestätigen lassen.\n\n**Demo:** Foto nur im sicher abgestellten Fahrzeug aufnehmen; Testbilder ohne persönliche Dokumentdaten verwenden.",
+        "width": 1000,
+        "height": 560
+      },
+      "notes": "",
+      "notesInFlow": true
+    }
+  ],
+  "connections": {
+    "01 AutoScan Formular": {
+      "main": [
+        [
+          {
+            "node": "02 Eingaben prüfen und normalisieren",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "02 Eingaben prüfen und normalisieren": {
+      "main": [
+        [
+          {
+            "node": "03 Eingang für nächsten Schritt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Europe/Berlin"
+  },
+  "tags": []
+}

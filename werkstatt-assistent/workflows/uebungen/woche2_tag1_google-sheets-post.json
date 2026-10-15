@@ -1,0 +1,253 @@
+{
+  "name": "AutoScan AI – Woche 2 Tag 1 – Webhook Mapping Google Sheets POST",
+  "nodes": [
+    {
+      "id": "63ba3911-18dc-4907-abb9-7d89df37d7c7",
+      "name": "Fahrzeugdaten per Webhook empfangen",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "autoscan-w2t1-google-sheets",
+        "responseMode": "lastNode",
+        "responseData": "firstEntryJson",
+        "options": {}
+      },
+      "notes": "Test URL kopieren, Listen for test event klicken, dann JSON per POST senden. Antwort kommt vom letzten Node. Nur Testdaten verwenden.",
+      "notesInFlow": true,
+      "webhookId": "5d04c087-7177-4aa0-bd35-fa70ec0ca9ca"
+    },
+    {
+      "id": "4403a826-d5f2-4507-82f1-91477e6bfda9",
+      "name": "Eingang prüfen und mappen",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        280,
+        0
+      ],
+      "parameters": {
+        "jsCode": "const body = $input.first().json.body;\nif (!body || typeof body !== 'object' || Array.isArray(body)) {\n  throw new Error('Bitte ein JSON-Objekt im Request-Body senden.');\n}\nconst vin = String(body.vin ?? '').trim().toUpperCase();\nif (!vin) throw new Error('Bitte das Pflichtfeld vin ausfüllen.');\nconst yearText = String(body.modelljahr ?? '').trim();\nif (!/^\\d{4}$/.test(yearText)) {\n  throw new Error('Bitte modelljahr als vierstelliges Jahr angeben.');\n}\nreturn [{ json: { vin, modelljahr: Number(yearText) } }];"
+      },
+      "notes": "Webhook-Daten liegen unter body. FIN trimmen und in Großbuchstaben umwandeln; Modelljahr als Zahl ausgeben. Leere FIN stoppt vor API-Aufruf.",
+      "notesInFlow": true
+    },
+    {
+      "id": "dff76676-bd33-46c1-8226-e1a40b15a492",
+      "name": "Fahrzeugdaten abrufen",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        560,
+        0
+      ],
+      "parameters": {
+        "method": "GET",
+        "url": "={{ 'https://vpic.nhtsa.dot.gov/api/vehicles/DecodeVinValues/' + encodeURIComponent($json.vin) }}",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "format",
+              "value": "json"
+            },
+            {
+              "name": "modelyear",
+              "value": "={{ $json.modelljahr }}"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 30000,
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "notes": "Echte öffentliche API ohne Zugangsdaten. Output → JSON: Results[0] enthält Make, Model, ModelYear sowie ErrorCode und ErrorText. Hinweise bei der Teil-FIN sind möglich.",
+      "notesInFlow": true
+    },
+    {
+      "id": "4a06fda9-efd5-4d8b-9aee-e3006b8de6d4",
+      "name": "Fahrzeugdaten normalisieren",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        840,
+        0
+      ],
+      "parameters": {
+        "jsCode": "const response = $input.first().json;\nif (!Array.isArray(response.Results) || !response.Results[0]) {\n  throw new Error('Die API-Antwort enthält keine Fahrzeugdaten unter Results[0].');\n}\nconst r = response.Results[0];\nconst text = value => String(value ?? '').trim();\nconst year = text(r.ModelYear);\nreturn [{ json: {\n  marke: text(r.Make) || 'unbekannt',\n  modell: text(r.Model) || 'unbekannt',\n  modelljahr: /^\\d{4}$/.test(year) ? Number(year) : null,\n  api_fehlercode: text(r.ErrorCode),\n  api_hinweis: text(r.ErrorText),\n  quelle: 'NHTSA vPIC',\n  test_hinweis: 'Öffentliche Teil-FIN aus der API-Dokumentation; keine vollständige Fahrzeugidentifikation.'\n} }];"
+      },
+      "notes": "Mapping: Make → marke, Model → modell, ModelYear → modelljahr. Filtering: nur benötigte Felder. Formatting: Leerzeichen entfernen und Jahr als Zahl; fehlendes Jahr bleibt null. API-Hinweise bleiben erhalten.",
+      "notesInFlow": true
+    },
+    {
+      "id": "28c432a8-918a-46b4-a242-2e106ab68f82",
+      "name": "Fahrzeugbericht ausgeben",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1120,
+        0
+      ],
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "7b639371-7081-461b-9469-7024f3ead193",
+              "name": "bericht",
+              "value": "={{ 'AutoScan AI – Fahrzeugdaten: ' + $json.marke + ' ' + $json.modell + ', Modelljahr ' + ($json.modelljahr ?? 'unbekannt') + '. Quelle: ' + $json.quelle + '. ' + $json.test_hinweis + ($json.api_hinweis ? ' API-Hinweis: ' + $json.api_hinweis : '') }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "notes": "Aktion der Übung: deutschen Fahrzeugbericht als JSON-Feld bericht ausgeben. Keine Diagnose. Output prüfen und für die Tagesaufgabe dokumentieren.",
+      "notesInFlow": true
+    },
+    {
+      "id": "ef7bb3c9-f5ca-4357-ab68-ec131f01c35c",
+      "name": "Google Sheets konfigurieren und mappen",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1400,
+        0
+      ],
+      "parameters": {
+        "jsCode": "// HIER ANPASSEN: Tabellen-ID und Name des Tabellenblatts.\nconst spreadsheetId = 'DEINE_TABELLEN_ID';\nconst sheetName = 'Fahrzeuge';\n\nif (spreadsheetId === 'DEINE_TABELLEN_ID' || !spreadsheetId.trim()) {\n  throw new Error('Bitte im Node Google Sheets konfigurieren und mappen die Tabellen-ID eintragen.');\n}\nconst d = $input.first().json;\nconst range = \"'\" + sheetName.replace(/'/g, \"''\") + \"'!A:E\";\nreturn [{ json: {\n  spreadsheet_id: spreadsheetId.trim(),\n  range,\n  values: [[\n    d.marke,\n    d.modell,\n    d.modelljahr ?? '',\n    d.bericht,\n    d.quelle\n  ]]\n} }];"
+      },
+      "notes": "Tabellen-ID aus Google-Sheets-URL zwischen /d/ und /edit eintragen. Blatt Fahrzeuge anlegen. Zeile 1: marke | modell | modelljahr | bericht | quelle. Mapping verwendet diese Spaltenreihenfolge.",
+      "notesInFlow": true
+    },
+    {
+      "id": "26b0e313-d60a-4b29-b546-fffa8c60919e",
+      "name": "Fahrzeugbericht per POST in Google Sheets schreiben",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1680,
+        0
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ 'https://sheets.googleapis.com/v4/spreadsheets/' + encodeURIComponent($json.spreadsheet_id) + '/values/' + encodeURIComponent($json.range) + ':append' }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleSheetsOAuth2Api",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "valueInputOption",
+              "value": "RAW"
+            },
+            {
+              "name": "insertDataOption",
+              "value": "INSERT_ROWS"
+            },
+            {
+              "name": "includeValuesInResponse",
+              "value": "true"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { majorDimension: 'ROWS', values: $json.values } }}",
+        "options": {
+          "timeout": 30000,
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "notes": "Nach Import Google Sheets OAuth2 API Credential auswählen oder erstellen. Das Konto benötigt Schreibzugriff auf die Tabelle. Jeder erfolgreiche POST fügt eine Zeile hinzu. Erfolg: updates.updatedRows = 1. Kein automatischer Retry, um doppelte Zeilen zu vermeiden.",
+      "notesInFlow": true
+    }
+  ],
+  "connections": {
+    "Fahrzeugdaten per Webhook empfangen": {
+      "main": [
+        [
+          {
+            "node": "Eingang prüfen und mappen",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Eingang prüfen und mappen": {
+      "main": [
+        [
+          {
+            "node": "Fahrzeugdaten abrufen",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fahrzeugdaten abrufen": {
+      "main": [
+        [
+          {
+            "node": "Fahrzeugdaten normalisieren",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fahrzeugdaten normalisieren": {
+      "main": [
+        [
+          {
+            "node": "Fahrzeugbericht ausgeben",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fahrzeugbericht ausgeben": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets konfigurieren und mappen",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets konfigurieren und mappen": {
+      "main": [
+        [
+          {
+            "node": "Fahrzeugbericht per POST in Google Sheets schreiben",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "tags": []
+}

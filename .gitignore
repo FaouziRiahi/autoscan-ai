@@ -1,0 +1,13 @@
+# macOS
+.DS_Store
+
+# Node / Vite (frontend has its own .gitignore too, this is a safety net)
+node_modules/
+dist/
+dist-ssr/
+*.local
+
+# Env files
+.env
+.env.*
+!.env.example
